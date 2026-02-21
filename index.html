@@ -8,55 +8,60 @@
         :root {
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
-            --error-black: #000000;
         }
 
         * { box-sizing: border-box; }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #000; overflow: hidden;
         }
 
-        /* 0. Loading Screen */
+        /* 🤌🏻 Loading Screen */
         #loading-screen {
             position: fixed; inset: 0; background: #000; z-index: 100;
             display: flex; justify-content: center; align-items: center;
             color: var(--lavender); font-size: 1.1rem;
         }
 
-        /* 1. Page 1: Login */
+        /* 1️⃣ Page 1: Login */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { display: flex; justify-content: center; align-items: center; }
         
         #bg-video {
-            width: 540px; height: 960px; /* Exact size requested */
+            width: 540px; height: 960px; 
             object-fit: cover; position: absolute; z-index: 1;
         }
 
         .login-container {
-            position: relative; z-index: 2; width: 300px;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            padding: 30px; border-radius: 20px; text-align: center;
+            position: relative; z-index: 2; width: 320px;
+            padding: 30px; text-align: center;
         }
 
         input[type="date"] {
-            width: 100%; padding: 15px; border-radius: 12px; border: none;
-            margin-bottom: 15px; font-size: 1rem;
+            width: 100%; padding: 15px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.15); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white; font-size: 1rem; margin-bottom: 15px;
+            outline: none; appearance: none; -webkit-appearance: none;
         }
+
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
 
         .btn-lavender {
             background: var(--lavender); color: var(--deep-purple);
-            border: none; padding: 15px 30px; border-radius: 30px;
-            font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem;
+            border: none; padding: 16px; border-radius: 30px;
+            font-weight: bold; width: 100%; cursor: pointer; font-size: 1.1rem;
         }
 
         #error-msg { 
-            color: var(--error-black); font-weight: bold; 
-            margin-top: 15px; font-size: 0.9rem; display: none; 
+            color: #000; font-weight: 900; margin-top: 15px; 
+            font-size: 0.9rem; display: none;
+            background: rgba(255,255,255,0.7); padding: 8px; border-radius: 8px;
         }
 
-        /* 2. Page 2: Cosmos Interactive Scroll */
+        /* 2️⃣ Page 2: Cosmos Interactive Scroll */
         #page2 { 
             background: var(--lavender); overflow-y: scroll; 
             scroll-snap-type: y mandatory; height: 100vh;
@@ -70,13 +75,13 @@
         }
 
         .scroll-text {
-            font-size: 2.8rem; font-weight: 800; color: white;
+            font-size: 3.2rem; font-weight: 800; color: white;
             text-align: center; padding: 20px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            max-width: 90%;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            letter-spacing: -1.5px;
         }
 
-        /* 3. Page 3: Final Paragraph */
+        /* 3️⃣ Page 3: Final Paragraph */
         #page3 { 
             background: var(--lavender); flex-direction: column; 
             align-items: center; padding: 60px 20px; overflow-y: auto;
@@ -87,76 +92,62 @@
             max-width: 600px; width: 100%; color: var(--deep-purple);
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
         }
-
-        .letter-header { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; display: block; }
-        .letter-body { line-height: 1.8; font-size: 1.1rem; }
-
     </style>
 </head>
 <body onload="init()">
 
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
 
-    <div id="page1" class="page" style="display: flex;">
-        <video id="bg-video" autoplay muted loop playsinline>
+    <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
+        <video id="bg-video" autoplay loop playsinline muted>
             <source src="video.mp4.MP4" type="video/mp4">
         </video>
         <div class="login-container">
-            <input type="date" id="birthdateInput">
+            <input type="date" id="birthInput" onfocus="unmuteVideo()">
             <button class="btn-lavender" onclick="checkLogin()">Vaa Polaam</button>
             <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image1.jpg.JPG');">
-            <div class="scroll-text">Edit Your Text 1</div>
-        </section>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image2.jpg.HEIC');">
-            <div class="scroll-text">Edit Your Text 2</div>
-        </section>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image3.jpg.HEIC');">
-            <div class="scroll-text">Edit Your Text 3</div>
-        </section>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image4.jpg.jpg');">
-            <div class="scroll-text">Edit Your Text 4</div>
-        </section>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image5.jpg.HEIC');">
-            <div class="scroll-text">Edit Your Text 5</div>
-        </section>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image6.jpg.HEIC');">
-            <div class="scroll-text">Edit Your Text 6</div>
-            <button class="btn-lavender" style="width: auto; margin-top: 20px;" onclick="goToFinal()">Hold my Hand</button>
+        <section class="scroll-section" style="background-image: url('image1.jpg.JPG');"><div class="scroll-text">Text 1</div></section>
+        <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');"><div class="scroll-text">Text 2</div></section>
+        <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');"><div class="scroll-text">Text 3</div></section>
+        <section class="scroll-section" style="background-image: url('image4.jpg.jpg');"><div class="scroll-text">Text 4</div></section>
+        <section class="scroll-section" style="background-image: url('image5.jpg.HEIC');"><div class="scroll-text">Text 5</div></section>
+        <section class="scroll-section" style="background-image: url('image6.jpg.HEIC');">
+            <div class="scroll-text">Text 6</div>
+            <button class="btn-lavender" style="width: auto; padding: 15px 40px; margin-top: 20px;" onclick="goToFinal()">Hold my Hand</button>
         </section>
     </div>
 
     <div id="page3" class="page">
         <div class="letter-box">
-            <span class="letter-header">Note: For You 💜</span>
-            <p class="letter-body">
-                Paste your full paragraph of the letter right here. 
-                Everything you want to say can go in this section.
+            <h2 style="margin-top:0">Header Note 💜</h2>
+            <p style="line-height:1.8; font-size:1.1rem;">
+                [REPLACE THIS: Your full birthday paragraph letter goes here!]
             </p>
         </div>
     </div>
 
     <script>
-        // Hides loading message after 2 seconds
+        const video = document.getElementById('bg-video');
+
         function init() {
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-            }, 2000);
+            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
         }
 
+        function unmuteVideo() { video.muted = false; }
+
         function checkLogin() {
-            const dateVal = document.getElementById('birthdateInput').value;
-            
-            // --- EDIT THIS DATE (YYYY-MM-DD) ---
-            const secretDate = "2004-02-23"; 
+            const dateVal = document.getElementById('birthInput').value;
+            const secretDate = "2004-02-23"; // 🚨 CHANGE THIS (YYYY-MM-DD)
             
             if (dateVal === secretDate) {
+                video.pause(); // Stops audio from Page 1
                 document.getElementById('page1').style.display = 'none';
                 document.getElementById('page2').style.display = 'block';
+                document.body.style.overflowY = 'auto';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
@@ -165,6 +156,7 @@
         function goToFinal() {
             document.getElementById('page2').style.display = 'none';
             document.getElementById('page3').style.display = 'flex';
+            window.scrollTo(0,0);
         }
     </script>
 </body>
