@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You 💜</title>
+    <style>
+        :root {
+            --lavender: #E6E6FA;
+            --deep-purple: #4b0082;
+            --error-black: #000000;
+        }
+
+        * { box-sizing: border-box; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            background-color: #000; overflow: hidden;
+        }
+
+        /* 0. Loading Screen */
+        #loading-screen {
+            position: fixed; inset: 0; background: #000; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--lavender); font-size: 1.1rem;
+        }
+
+        /* 1. Page 1: Login */
+        .page { display: none; width: 100%; height: 100vh; position: relative; }
+        #page1 { display: flex; justify-content: center; align-items: center; }
+        
+        #bg-video {
+            width: 540px; height: 960px; /* Exact size requested */
+            object-fit: cover; position: absolute; z-index: 1;
+        }
+
+        .login-container {
+            position: relative; z-index: 2; width: 300px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            padding: 30px; border-radius: 20px; text-align: center;
+        }
+
+        input[type="date"] {
+            width: 100%; padding: 15px; border-radius: 12px; border: none;
+            margin-bottom: 15px; font-size: 1rem;
+        }
+
+        .btn-lavender {
+            background: var(--lavender); color: var(--deep-purple);
+            border: none; padding: 15px 30px; border-radius: 30px;
+            font-weight: bold; width: 100%; cursor: pointer; font-size: 1rem;
+        }
+
+        #error-msg { 
+            color: var(--error-black); font-weight: bold; 
+            margin-top: 15px; font-size: 0.9rem; display: none; 
+        }
+
+        /* 2. Page 2: Cosmos Interactive Scroll */
+        #page2 { 
+            background: var(--lavender); overflow-y: scroll; 
+            scroll-snap-type: y mandatory; height: 100vh;
+        }
+
+        .scroll-section {
+            height: 100vh; width: 100%; scroll-snap-align: start;
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; position: relative;
+            background-size: cover; background-position: center;
+        }
+
+        .scroll-text {
+            font-size: 2.8rem; font-weight: 800; color: white;
+            text-align: center; padding: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            max-width: 90%;
+        }
+
+        /* 3. Page 3: Final Paragraph */
+        #page3 { 
+            background: var(--lavender); flex-direction: column; 
+            align-items: center; padding: 60px 20px; overflow-y: auto;
+        }
+
+        .letter-box {
+            background: white; padding: 40px; border-radius: 30px;
+            max-width: 600px; width: 100%; color: var(--deep-purple);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .letter-header { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; display: block; }
+        .letter-body { line-height: 1.8; font-size: 1.1rem; }
+
+    </style>
+</head>
+<body onload="init()">
+
+    <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
+
+    <div id="page1" class="page" style="display: flex;">
+        <video id="bg-video" autoplay muted loop playsinline>
+            <source src="video.mp4.MP4" type="video/mp4">
+        </video>
+        <div class="login-container">
+            <input type="date" id="birthdateInput">
+            <button class="btn-lavender" onclick="checkLogin()">Vaa Polaam</button>
+            <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
+        </div>
+    </div>
+
+    <div id="page2" class="page">
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image1.jpg.JPG');">
+            <div class="scroll-text">Edit Your Text 1</div>
+        </section>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image2.jpg.HEIC');">
+            <div class="scroll-text">Edit Your Text 2</div>
+        </section>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image3.jpg.HEIC');">
+            <div class="scroll-text">Edit Your Text 3</div>
+        </section>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image4.jpg.jpg');">
+            <div class="scroll-text">Edit Your Text 4</div>
+        </section>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image5.jpg.HEIC');">
+            <div class="scroll-text">Edit Your Text 5</div>
+        </section>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url('image6.jpg.HEIC');">
+            <div class="scroll-text">Edit Your Text 6</div>
+            <button class="btn-lavender" style="width: auto; margin-top: 20px;" onclick="goToFinal()">Hold my Hand</button>
+        </section>
+    </div>
+
+    <div id="page3" class="page">
+        <div class="letter-box">
+            <span class="letter-header">Note: For You 💜</span>
+            <p class="letter-body">
+                Paste your full paragraph of the letter right here. 
+                Everything you want to say can go in this section.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Hides loading message after 2 seconds
+        function init() {
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+            }, 2000);
+        }
+
+        function checkLogin() {
+            const dateVal = document.getElementById('birthdateInput').value;
+            
+            // --- EDIT THIS DATE (YYYY-MM-DD) ---
+            const secretDate = "2000-01-01"; 
+            
+            if (dateVal === secretDate) {
+                document.getElementById('page1').style.display = 'none';
+                document.getElementById('page2').style.display = 'block';
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        function goToFinal() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page3').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
