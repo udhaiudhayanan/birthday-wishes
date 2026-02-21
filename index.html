@@ -8,6 +8,7 @@
         :root {
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
+            --glass: rgba(255, 255, 255, 0.15);
         }
 
         * { box-sizing: border-box; }
@@ -22,6 +23,15 @@
             position: fixed; inset: 0; background: #000; z-index: 100;
             display: flex; justify-content: center; align-items: center;
             color: var(--lavender); font-size: 1.1rem;
+        }
+
+        /* Navigation Buttons */
+        .back-btn {
+            position: absolute; top: 20px; left: 20px; z-index: 50;
+            background: var(--glass); backdrop-filter: blur(10px);
+            color: white; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 18px; border-radius: 20px; font-size: 0.8rem;
+            cursor: pointer;
         }
 
         /* 1️⃣ Page 1: Login */
@@ -40,8 +50,8 @@
 
         input[type="date"] {
             width: 100%; padding: 15px; border-radius: 12px;
-            background: rgba(255, 255, 255, 0.15); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            background: var(--glass); backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white; font-size: 1rem; margin-bottom: 15px;
             outline: none; appearance: none; -webkit-appearance: none;
@@ -53,6 +63,7 @@
             background: var(--lavender); color: var(--deep-purple);
             border: none; padding: 16px; border-radius: 30px;
             font-weight: bold; width: 100%; cursor: pointer; font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
 
         #error-msg { 
@@ -77,20 +88,21 @@
         .scroll-text {
             font-size: 3.2rem; font-weight: 800; color: white;
             text-align: center; padding: 20px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
-            letter-spacing: -1.5px;
+            text-shadow: 0 4px 25px rgba(0,0,0,0.7);
+            letter-spacing: -1.5px; line-height: 1;
         }
 
         /* 3️⃣ Page 3: Final Paragraph */
         #page3 { 
             background: var(--lavender); flex-direction: column; 
-            align-items: center; padding: 60px 20px; overflow-y: auto;
+            align-items: center; padding: 80px 20px; overflow-y: auto;
         }
 
         .letter-box {
             background: white; padding: 40px; border-radius: 30px;
             max-width: 600px; width: 100%; color: var(--deep-purple);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
         }
     </style>
 </head>
@@ -110,23 +122,42 @@
     </div>
 
     <div id="page2" class="page">
-        <section class="scroll-section" style="background-image: url('image1.jpg.JPG');"><div class="scroll-text">Text 1</div></section>
-        <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');"><div class="scroll-text">Text 2</div></section>
-        <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');"><div class="scroll-text">Text 3</div></section>
-        <section class="scroll-section" style="background-image: url('image4.jpg.jpg');"><div class="scroll-text">Text 4</div></section>
-        <section class="scroll-section" style="background-image: url('image5.jpg.HEIC');"><div class="scroll-text">Text 5</div></section>
+        <button class="back-btn" onclick="goBackToLogin()">← Back</button>
+        
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('image1.jpg.JPG');">
+            <div class="scroll-text">Thinking of you.</div>
+        </section>
+        
+        <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');">
+            <div class="scroll-text">Every single</div>
+        </section>
+        
+        <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');">
+            <div class="scroll-text">moment.</div>
+        </section>
+        
+        <section class="scroll-section" style="background-image: url('image4.jpg.jpg');">
+            <div class="scroll-text">You are</div>
+        </section>
+        
+        <section class="scroll-section" style="background-image: url('image5.jpg.HEIC');">
+            <div class="scroll-text">my peace.</div>
+        </section>
+        
         <section class="scroll-section" style="background-image: url('image6.jpg.HEIC');">
-            <div class="scroll-text">Text 6</div>
-            <button class="btn-lavender" style="width: auto; padding: 15px 40px; margin-top: 20px;" onclick="goToFinal()">Hold my Hand</button>
+            <div class="scroll-text">Ready?</div>
+            <button class="btn-lavender" style="width: auto; padding: 15px 40px; margin-top: 30px;" onclick="goToFinal()">Hold my Hand</button>
         </section>
     </div>
 
     <div id="page3" class="page">
+        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--lavender);" onclick="goBackToScroll()">← Back to Photos</button>
         <div class="letter-box">
-            <h2 style="margin-top:0">Header Note 💜</h2>
-            <p style="line-height:1.8; font-size:1.1rem;">
-                [REPLACE THIS: Your full birthday paragraph letter goes here!]
+            <h2 style="margin-top:0; font-weight: 800;">For My Human 💜</h2>
+            <p style="line-height:1.8; font-size:1.1rem; color: #333;">
+                Paste your full heartfelt letter right here. Tell them everything about how much they mean to you. This is your dedicated space to be as long as you want!
             </p>
+            <p style="text-align: right; font-weight: bold; margin-top: 30px;">- Always yours</p>
         </div>
     </div>
 
@@ -137,17 +168,20 @@
             setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
         }
 
-        function unmuteVideo() { video.muted = false; }
+        // Unmutes audio when user interacts
+        function unmuteVideo() { 
+            video.muted = false; 
+        }
 
         function checkLogin() {
             const dateVal = document.getElementById('birthInput').value;
-            const secretDate = "2004-02-23"; // 🚨 CHANGE THIS (YYYY-MM-DD)
+            const secretDate = "2004-02-23"; // 🚨 EDIT THIS (YYYY-MM-DD)
             
             if (dateVal === secretDate) {
-                video.pause(); // Stops audio from Page 1
+                video.pause(); // Stops video audio when moving to next page
                 document.getElementById('page1').style.display = 'none';
                 document.getElementById('page2').style.display = 'block';
-                document.body.style.overflowY = 'auto';
+                document.body.style.overflow = 'auto';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
@@ -157,6 +191,18 @@
             document.getElementById('page2').style.display = 'none';
             document.getElementById('page3').style.display = 'flex';
             window.scrollTo(0,0);
+        }
+
+        function goBackToLogin() {
+            document.getElementById('page2').style.display = 'none';
+            document.getElementById('page1').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+            video.play();
+        }
+
+        function goBackToScroll() {
+            document.getElementById('page3').style.display = 'none';
+            document.getElementById('page2').style.display = 'block';
         }
     </script>
 </body>
