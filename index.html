@@ -24,11 +24,11 @@
             color: var(--lavender); font-family: var(--royal-font);
         }
 
-        /* TRANSPARENT BACK BUTTON */
+        /* FIX 1: REDUCED BACK BUTTON TRANSPARENCY */
         .back-nav {
             position: fixed; top: 20px; left: 20px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            color: white; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);
+            color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255,255,255,0.1);
             padding: 10px 15px; border-radius: 50%; cursor: pointer; display: none;
         }
 
@@ -50,13 +50,10 @@
         }
         input[type="date"]::before { content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.6); }
 
-        /* PAGE 2: LAVENDER SCROLL WITH PAGE BREAKS */
-        #page2 { 
-            background: var(--lavender); 
-            overflow-y: scroll; 
-            scroll-snap-type: y mandatory; /* Page Break Logic */
-            height: 100vh;
-        }
+        #error-msg { color: #ffb3b3; font-size: 0.7rem; margin-top: 10px; display: none; font-style: italic; }
+
+        /* PAGE 2: LAVENDER SCROLL */
+        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; height: 100vh; }
         #page2::-webkit-scrollbar { display: none; }
 
         .scroll-section {
@@ -66,28 +63,19 @@
             position: relative; padding: 40px 20px;
         }
 
-        /* CONTENT STYLES */
-        .masonry-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 400px; }
         .fade-item { opacity: 0; transition: all 0.8s ease-out; transform: translateY(20px); }
-        .fade-item img { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
+        .show { opacity: 1 !important; transform: translateY(0) !important; }
+
         .cosmos-title { font-size: 2.8rem; font-weight: 900; color: #000; letter-spacing: 5px; text-transform: uppercase; }
         .typing-box { font-family: monospace; font-size: 1.1rem; color: #000; border-right: 2px solid #000; white-space: nowrap; overflow: hidden; width: 0; }
-        
-        /* SCROLL DOWN INDICATOR */
-        .scroll-down {
-            position: absolute; bottom: 30px; animation: bounce 2s infinite;
-            font-size: 0.8rem; color: #000; font-weight: bold; opacity: 0.6;
-        }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
-
-        /* ACTIVE STATES */
-        .show { opacity: 1 !important; transform: translateY(0) !important; }
         .type-now { animation: typing 3s steps(30, end) forwards; }
         @keyframes typing { from { width: 0 } to { width: 100% } }
 
+        .scroll-down { position: absolute; bottom: 30px; animation: bounce 2s infinite; font-size: 0.8rem; color: #000; opacity: 0.6; }
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+
         .btn-enter { background: #000; color: white; border: none; padding: 12px 40px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
-        .sub-txt { color: #555; font-style: italic; margin-top: 10px; text-align: center; font-size: 0.9rem; max-width: 80%; }
+        .sub-txt { color: #555; font-style: italic; margin-top: 10px; text-align: center; font-size: 0.9rem; }
     </style>
 </head>
 <body onload="init()">
@@ -102,56 +90,43 @@
             <h2 style="color:white; font-family: var(--royal-font);">For my Buji🎀</h2>
             <input type="date" id="birthInput">
             <button class="btn-enter" style="background: white; color: black; width: 100%;" onclick="checkLogin()">Enter</button>
+            <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
         <section class="scroll-section">
-            <div class="masonry-mini-grid">
-                <div class="fade-item" style="transition-delay: 0.2s;"><img src="img1.JPG"></div>
-                <div class="fade-item" style="transition-delay: 0.4s; margin-top: 20px;"><img src="img2.jpg"></div>
-                <div class="fade-item" style="transition-delay: 0.6s;"><img src="img3.jpg"></div>
-                <div class="fade-item" style="transition-delay: 0.8s;"><img src="img4.jpg"></div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div class="fade-item"><img src="img1.JPG" style="width:100%; border-radius:10px;"></div>
+                <div class="fade-item" style="margin-top:20px;"><img src="img2.jpg" style="width:100%; border-radius:10px;"></div>
             </div>
-            <p class="sub-txt fade-item">A collection of us.</p>
             <div class="scroll-down">Scroll Down ↓</div>
         </section>
 
         <section class="scroll-section">
             <div class="cosmos-title fade-item">COSMOS</div>
-            <p class="sub-txt fade-item">You are the stars in my dark sky.</p>
+            <p class="sub-txt fade-item">You are my universe.</p>
         </section>
         
         <section class="scroll-section">
-            <img src="img5.jpg" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" class="fade-item">
-            <div class="cosmos-title fade-item" style="font-size: 1.5rem; margin-top: 15px;">MY UNIVERSE</div>
-            <p class="sub-txt fade-item">Every atom of me loves every atom of you.</p>
+            <img src="img9.jpg" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;" class="fade-item">
+            <p class="sub-txt fade-item">The piece that was missing.</p>
         </section>
         
         <section class="scroll-section">
-            <div class="typing-box" id="typer">You are my peace in this chaos...</div>
-            <p class="sub-txt fade-item" style="margin-top: 30px; opacity: 0.4 !important;">Keep scrolling, Buji.</p>
+            <div class="typing-box" id="typer">You are my peace...</div>
         </section>
         
         <section class="scroll-section">
-            <div style="width: 85%; height: 50vh; background: white; border-radius: 25px; overflow: hidden;" class="fade-item">
-                <img src="img6.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="width: 85%; height: 40vh; background: white; border-radius: 25px; overflow: hidden;" class="fade-item">
+                <img src="img10.jpg" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <p class="sub-txt fade-item">My favorite notification.</p>
+            <p class="sub-txt fade-item">Simply Beautiful.</p>
         </section>
 
         <section class="scroll-section">
             <div class="fade-item" style="text-align: center;">
-                <img src="img7.jpg" style="width: 60px; height: 60px; border-radius: 10px; margin-bottom: 10px;">
-                <div class="cosmos-title" style="font-size: 1.2rem;">Always & Forever</div>
-                <p class="sub-txt">No matter where we go,<br>I'll always find my way back to you.</p>
-            </div>
-        </section>
-
-        <section class="scroll-section">
-            <div class="fade-item" style="text-align: center;">
-                <img src="img8.jpg" style="width: 200px; border-radius: 20px; margin-bottom: 20px;">
-                <div class="cosmos-title" style="font-size: 1rem;">One last thing...</div>
+                <img src="img8.jpg" style="width: 200px; border-radius: 20px;">
                 <button class="btn-enter" onclick="goToFinal()">READ THE LETTER</button>
             </div>
         </section>
@@ -159,38 +134,37 @@
 
     <div id="page3" class="page" style="background: var(--lavender); overflow-y: auto;">
         <div style="display: flex; flex-direction: column; align-items: center; padding: 100px 20px;">
-            <div style="background: white; padding: 40px; border-radius: 30px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
-                <h2 style="font-family: var(--royal-font); color: var(--deep-purple);">Dear Buji,</h2>
-                <p style="line-height: 1.8; color: #333;">[PASTE YOUR LONG LETTER HERE]</p>
-                <div style="margin-top: 40px; opacity: 0.3; font-size: 0.8rem; text-align: center;">With all my love.</div>
+            <div style="background: white; padding: 40px; border-radius: 30px; width: 100%; max-width: 500px;">
+                <h2 style="font-family: var(--royal-font);">Dear Buji,</h2>
+                <p>[PASTE LETTER]</p>
             </div>
         </div>
     </div>
 
     <script>
+        const video = document.getElementById('bg-video');
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
         const p3 = document.getElementById('page3');
         const backBtn = document.getElementById('universalBack');
 
         function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 2000); }
-        function unmuteVideo() { document.getElementById('bg-video').muted = false; }
+        function unmuteVideo() { video.muted = false; }
         
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
+                video.pause(); // FIX 3: AUDIO ARRESTED TO LOGIN
                 p1.style.display = 'none'; p2.style.display = 'block';
                 backBtn.style.display = 'block';
                 setupObserver();
+            } else {
+                document.getElementById('error-msg').style.display = 'block'; // FIX 2: ERROR MSG TRIGGER
             }
         }
 
         function goBack() {
-            if (p3.style.display === 'flex' || p3.style.display === 'block') {
-                p3.style.display = 'none'; p2.style.display = 'block';
-            } else if (p2.style.display === 'block') {
-                p2.style.display = 'none'; p1.style.display = 'flex';
-                backBtn.style.display = 'none';
-            }
+            if (p3.style.display === 'block') { p3.style.display = 'none'; p2.style.display = 'block'; }
+            else { p2.style.display = 'none'; p1.style.display = 'flex'; backBtn.style.display = 'none'; video.play(); }
         }
 
         function goToFinal() { p2.style.display = 'none'; p3.style.display = 'block'; }
@@ -204,8 +178,7 @@
                     }
                 });
             }, { threshold: 0.5 });
-
-            document.querySelectorAll('.fade-item, .scroll-section div, .scroll-section p').forEach(el => observer.observe(el));
+            document.querySelectorAll('.fade-item, .scroll-section p, .typing-box').forEach(el => observer.observe(el));
         }
     </script>
 </body>
