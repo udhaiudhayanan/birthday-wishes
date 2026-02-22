@@ -9,8 +9,6 @@
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
             --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
-            /* Increased visibility for the glass */
-            --glass-bg: rgba(0, 0, 0, 0.3); 
             --glass-border: rgba(255, 255, 255, 0.3);
         }
 
@@ -28,20 +26,19 @@
         }
 
         .back-btn {
-            position: absolute; top: env(safe-area-inset-top, 25px); left: 20px; z-index: 100;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);
+            position: absolute; top: 25px; left: 20px; z-index: 100;
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
             color: white; border: 1px solid var(--glass-border);
             padding: 8px 15px; border-radius: 2px; font-family: var(--royal-font);
-            font-size: 0.7rem; letter-spacing: 2px;
+            font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        /* 1️⃣ Page 1: Optimized for Android Chrome viewport */
-        .page { display: none; width: 100%; height: 100vh; height: -webkit-fill-available; position: relative; }
-        
+        /* PAGE 1: RESTORED TO PREVIOUS BOTTOM LAYOUT */
+        .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { 
             display: flex; flex-direction: column; 
             justify-content: flex-end; align-items: center; 
-            padding-bottom: 15vh; /* Safe distance for Realme/Android bottom bars */
+            padding-bottom: 80px; 
         }
         
         #bg-video {
@@ -51,43 +48,41 @@
 
         .login-container {
             position: relative; z-index: 2; width: 85%; max-width: 380px;
-            padding: 30px 20px; text-align: center;
-            background: var(--glass-bg);
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            padding: 25px; text-align: center;
+            background: rgba(0, 0, 0, 0.2); 
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--glass-border);
-            border-radius: 15px;
         }
 
         .royal-title {
-            color: white; font-family: var(--royal-font);
-            font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; opacity: 0.9;
+            color: white; font-family: var(--royal-font); font-size: 1.6rem; 
+            margin-bottom: 20px; letter-spacing: 3px; opacity: 0.9;
         }
 
-        /* Date label visibility increased */
+        /* DATE LABEL: Increased Opacity & Underline */
         input[type="date"] {
-            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1);
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); 
             border: none; border-bottom: 2px solid var(--lavender);
             color: white; font-family: var(--royal-font); font-size: 1.1rem;
             margin-bottom: 25px; outline: none; text-align: center;
-            border-radius: 5px 5px 0 0;
+            border-radius: 4px 4px 0 0;
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.8; }
 
         .btn-enter {
-            background: rgba(230, 230, 250, 0.15); color: white; border: 1px solid var(--lavender);
+            background: transparent; color: white; border: 1px solid var(--lavender);
             padding: 15px; font-family: var(--royal-font); text-transform: uppercase;
-            letter-spacing: 5px; width: 100%; cursor: pointer; transition: 0.4s;
-            border-radius: 2px;
+            letter-spacing: 6px; width: 100%; cursor: pointer; transition: 0.4s;
         }
         .btn-enter:active { background: var(--lavender); color: var(--deep-purple); }
 
         #error-msg { 
-            color: #ffcccc; font-family: var(--royal-font); font-size: 0.85rem; 
-            margin-top: 15px; display: none; text-shadow: 1px 1px 2px black;
+            color: white; font-family: var(--royal-font); font-size: 0.8rem; font-style: italic;
+            margin-top: 15px; display: none; letter-spacing: 1px;
         }
 
-        /* 2️⃣ Page 2: Scroll */
+        /* PAGE 2: SCROLL */
         #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; }
         .scroll-section {
             height: 100vh; width: 100%; scroll-snap-align: start;
@@ -95,16 +90,16 @@
             align-items: center; background-size: cover; background-position: center;
         }
         .scroll-text {
-            font-size: 2.8rem; font-weight: 800; color: white; text-align: center;
+            font-size: 3rem; font-weight: 800; color: white; text-align: center;
             padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6); letter-spacing: -1px;
         }
 
-        /* 3️⃣ Page 3: Final */
+        /* PAGE 3: FINAL */
         #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; }
         .letter-box {
-            background: white; padding: 40px; border-radius: 5px;
+            background: white; padding: 45px 35px; border-radius: 2px;
             max-width: 550px; width: 100%; color: var(--deep-purple);
-            box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -138,10 +133,10 @@
     </div>
 
     <div id="page3" class="page">
-        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--deep-purple); top: 30px;" onclick="goBackToScroll()">← PHOTOS</button>
+        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--deep-purple);" onclick="goBackToScroll()">← PHOTOS</button>
         <div class="letter-box">
             <h2 style="font-family: var(--royal-font); font-style: italic; font-weight: 200; font-size: 2rem;">Dear Buji,</h2>
-            <p style="line-height: 1.8; font-size: 1.05rem; color: #444;">
+            <p style="line-height: 2; font-size: 1.05rem; color: #444;">
                 [PASTE YOUR FULL LETTER HERE]
                 <br><br>
                 Happy Birthday! 💜
@@ -157,9 +152,6 @@
 
         function init() {
             setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
-            // Fix for Android viewport height
-            let vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
         }
 
         function unmuteVideo() { video.muted = false; }
