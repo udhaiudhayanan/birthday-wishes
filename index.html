@@ -9,7 +9,6 @@
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
             --royal-font: "Didot", serif;
-            --glass-border: rgba(255, 255, 255, 0.4);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -22,143 +21,149 @@
         #loading-screen {
             position: fixed; inset: 0; background: #000; z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
+            color: var(--lavender); font-family: var(--royal-font);
         }
 
         /* PAGE 1: LOGIN */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
         #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        
         .login-container {
             position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center;
-            background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 40px; animation: float 3s ease-in-out infinite; 
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: 40px;
         }
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
 
-        /* 🌌 PAGE 2: LAVENDER SCROLL */
-        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y proximity; }
+        /* TEXT INSIDE DATE TABLE */
+        input[type="date"] {
+            width: 100%; padding: 12px; background: rgba(255,255,255,0.1); 
+            border: 1px solid var(--lavender); border-radius: 15px;
+            color: white; font-size: 1rem; margin-bottom: 20px; outline: none; text-align: center;
+        }
+        input[type="date"]::before {
+            content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.6); margin-right: 5px;
+        }
+
+        /* PAGE 2: LAVENDER SCROLL */
+        #page2 { background: var(--lavender); overflow-y: scroll; scroll-behavior: smooth; }
         #page2::-webkit-scrollbar { display: none; }
 
-        /* MASONRY SECTION (The "Cosmos" Fade Scroll) */
-        .masonry-container { padding: 50px 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .cosmos-item { 
+        /* MASONRY FADE SECTION */
+        .masonry-grid { padding: 40px 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .fade-item { 
             width: 100%; border-radius: 10px; overflow: hidden; 
-            opacity: 0; transition: opacity 0.5s ease; /* Fast Fade */
+            opacity: 0; transform: scale(0.9); transition: all 0.5s ease-out; 
         }
-        .cosmos-item img { width: 100%; display: block; }
+        .fade-item img { width: 100%; display: block; object-fit: cover; }
 
-        /* NARRATIVE SECTIONS (The 6 Full-Screen Scrolls) */
+        /* NARRATIVE SECTIONS */
         .scroll-section {
-            height: 100vh; width: 100%; scroll-snap-align: start;
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; position: relative; padding: 20px;
+            height: 100vh; width: 100%; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; padding: 20px;
         }
-
-        .cosmos-text { font-size: 2.2rem; font-weight: 800; color: #000; text-align: center; opacity: 0; transform: translateY(20px); transition: 0.6s all ease; }
-        .section-active .cosmos-text { opacity: 1; transform: translateY(0); }
-
-        .typing-text { font-family: monospace; font-size: 1rem; border-right: 2px solid #000; white-space: nowrap; overflow: hidden; width: 0; color: #000; }
-        .section-active .typing-text { animation: typing 3s steps(30, end) forwards; }
+        .cosmos-title { font-size: 2.5rem; font-weight: 900; color: #000; letter-spacing: 5px; opacity: 0; transition: 1s; }
+        .tiny-circle { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; opacity: 0; transition: 1s; }
+        .typing-box { font-family: monospace; font-size: 1.1rem; color: #000; white-space: nowrap; overflow: hidden; width: 0; border-right: 2px solid #000; }
+        .template-card { width: 85%; height: 50vh; background: white; border-radius: 20px; overflow: hidden; opacity: 0; transition: 1s; }
+        
+        /* ACTIVE STATES */
+        .show { opacity: 1 !important; transform: scale(1) !important; }
+        .type-now { animation: typing 3s steps(30, end) forwards; }
         @keyframes typing { from { width: 0 } to { width: 100% } }
 
-        .tiny-img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; opacity: 0; transition: 0.5s ease; }
-        .section-active .tiny-img { opacity: 1; }
-
-        .full-card { width: 85%; height: 50vh; background: white; border-radius: 25px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .full-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* PAGE 3: LETTER */
-        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
-        .letter-box { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 100%; color: var(--deep-purple); }
-
-        .btn-enter { background: #000; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        .btn-enter { background: #000; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
     </style>
 </head>
 <body onload="init()">
 
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
 
-    <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
+    <div id="page1" class="page" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
         <div class="login-container">
             <h2 style="color:white; font-family: var(--royal-font);">For my Buji🎀</h2>
-            <label for="birthInput" style="color: white; font-size: 0.8rem; display: block; margin-bottom: 5px; opacity: 0.8;">Tap here 👇🏻</label>
             <input type="date" id="birthInput">
-            <button class="btn-enter" style="background: white; color: black;" onclick="checkLogin()">Enter</button>
+            <button class="btn-enter" style="background: white; color: black; width: 100%;" onclick="checkLogin()">Enter</button>
         </div>
     </div>
 
     <div id="page2" class="page">
-        
-        <div class="masonry-container">
-            <div class="cosmos-item"><img src="img1.JPG"></div>
-            <div class="cosmos-item" style="margin-top: 30px;"><img src="img2.jpg"></div>
-            <div class="cosmos-item"><img src="img3.jpg"></div>
-            <div class="cosmos-item" style="margin-top: -20px;"><img src="img4.jpg"></div>
+        <div class="masonry-grid">
+            <div class="fade-item"><img src="img1.JPG"></div>
+            <div class="fade-item" style="margin-top: 50px;"><img src="img2.jpg"></div>
+            <div class="fade-item"><img src="img3.jpg"></div>
+            <div class="fade-item"><img src="img4.jpg"></div>
+            <div class="fade-item" style="margin-top: -30px;"><img src="img5.jpg"></div>
+            <div class="fade-item"><img src="img6.jpg"></div>
         </div>
 
-        <section class="scroll-section"><div class="cosmos-text" style="letter-spacing: 5px;">COSMOS</div></section>
+        <section class="scroll-section"><div class="cosmos-title fade-item">COSMOS</div></section>
         
         <section class="scroll-section">
-            <img src="img5.jpg" class="tiny-img">
-            <div class="cosmos-text" style="font-size: 1.2rem;">Tiny moments...</div>
+            <img src="img7.jpg" class="tiny-circle fade-item">
+            <p class="fade-item" style="color: #000; font-weight: bold;">Tiny moments.</p>
         </section>
         
-        <section class="scroll-section"><div class="typing-text">You are my favorite view...</div></section>
+        <section class="scroll-section"><div class="typing-box" id="typer">You are my universe...</div></section>
         
         <section class="scroll-section">
-            <div class="full-card"><img src="img6.jpg"></div>
-            <div class="cosmos-text" style="font-size: 1rem; margin-top: 10px;">Forever yours.</div>
+            <div class="template-card fade-item"><img src="img8.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
+            <p class="fade-item" style="color:#000; margin-top:10px;">My favorite person.</p>
         </section>
-        
-        <section class="scroll-section"><div class="cosmos-text">Always.</div></section>
-        
+
         <section class="scroll-section">
-            <div class="cosmos-text">Ready?</div>
+            <img src="img9.jpg" style="width: 150px; border-radius: 10px;" class="fade-item">
+            <div class="cosmos-title fade-item" style="font-size: 1.5rem; margin-top:10px;">Always Forever</div>
+        </section>
+
+        <section class="scroll-section">
+            <img src="img10.jpg" style="width: 100%; height: 40vh; object-fit: contain;" class="fade-item">
             <button class="btn-enter" onclick="goToFinal()">OPEN LETTER</button>
         </section>
     </div>
 
-    <div id="page3" class="page">
-        <div class="letter-box">
-            <h2 style="font-family: var(--royal-font); font-style: italic;">Dear Buji,</h2>
-            <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
+    <div id="page3" class="page" style="background: var(--lavender); flex-direction: column; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 85%;">
+            <h2 style="color: var(--deep-purple);">Dear Buji,</h2>
+            <p>[YOUR LETTER HERE]</p>
         </div>
     </div>
 
     <script>
-        const video = document.getElementById('bg-video');
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
 
-        function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000); }
-        function unmuteVideo() { video.muted = false; }
+        function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 2000); }
+        function unmuteVideo() { document.getElementById('bg-video').muted = false; }
         
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                video.pause(); p1.style.display = 'none'; p2.style.display = 'block';
-                startScrollEngine();
+                p1.style.display = 'none'; p2.style.display = 'block';
+                window.addEventListener('scroll', handleFade, true);
             }
         }
 
-        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; window.scrollTo(0,0); }
+        function handleFade() {
+            const items = document.querySelectorAll('.fade-item');
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const viewHeight = window.innerHeight;
+                // Fade in when entering center, fade out when leaving
+                if (rect.top > 0 && rect.top < viewHeight * 0.8) {
+                    item.classList.add('show');
+                } else {
+                    item.classList.remove('show');
+                }
+            });
 
-        function startScrollEngine() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('section-active');
-                        if(entry.target.classList.contains('cosmos-item')) entry.target.style.opacity = 1;
-                    } else {
-                        entry.target.classList.remove('section-active');
-                        if(entry.target.classList.contains('cosmos-item')) entry.target.style.opacity = 0;
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            document.querySelectorAll('.scroll-section, .cosmos-item').forEach(el => observer.observe(el));
+            const typer = document.getElementById('typer');
+            if (typer.getBoundingClientRect().top < window.innerHeight * 0.7) {
+                typer.classList.add('type-now');
+            }
         }
+
+        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; }
     </script>
 </body>
 </html>
