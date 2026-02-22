@@ -6,18 +6,19 @@
     <title>For My Buji ma 🎀</title>
     <style>
         :root {
-            --vibrant-violet: #8A2BE2;
+            --peach: #FFDAB9;
+            --lavender: #E6E6FA;
+            --thistle: #D8BFD8; 
             --loading-purple: #4b0082;
+            /* The Transparent Border Color */
+            --glass-border: rgba(255, 255, 255, 0.4);
             --royal-font: "Didot", serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        /* iOS Elastic Scroll Feel */
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: var(--vibrant-violet); 
-            overflow: hidden;
+            background-color: var(--peach); overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
@@ -27,149 +28,125 @@
             color: white; font-family: var(--royal-font); font-style: italic;
         }
 
-        /* 1️⃣ PAGE 1: FLOATING LOGIN */
-        .page { display: none; width: 100%; height: 100vh; position: relative; z-index: 10; }
-        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; background: #000; }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        /* 1️⃣ PAGE 1: PEACH LOGIN */
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; height: 100vh; position: relative; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.9; }
         
         .login-capsule { 
             position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center; 
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; 
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 40px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
             animation: floatUI 4s ease-in-out infinite;
-            will-change: transform;
         }
 
         @keyframes floatUI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         input[type="date"] {
             width: 100%; padding: 12px; background: transparent; border: none; 
-            border-bottom: 2px solid white; color: white; text-align: center;
+            border-bottom: 2px solid #555; color: #333; text-align: center;
             font-size: 1.1rem; margin-bottom: 20px; outline: none;
         }
 
-        .btn-enter { 
-            background: white; color: black; border: none; padding: 14px; 
-            width: 100%; border-radius: 30px; font-weight: 700; letter-spacing: 1px;
-        }
+        .btn-enter { background: #333; color: white; border: none; padding: 12px; width: 100%; border-radius: 30px; font-weight: bold; }
 
-        /* 2️⃣ PAGE 2: iPHONE MULTITASK STACK */
-        #page2 { 
-            background-color: var(--vibrant-violet); 
-            overflow-y: scroll; 
-            scroll-snap-type: y mandatory;
-            height: 100vh;
-            -webkit-overflow-scrolling: touch; /* Butter smooth iOS physics */
-            scroll-behavior: smooth;
-        }
+        /* 2️⃣ PAGE 2: LAVENDER LAYERED STACK WITH GLASS BORDERS */
+        #page2 { display: none; background-color: var(--lavender); overflow-y: auto; scroll-snap-type: y proximity; height: 100vh; }
         #page2::-webkit-scrollbar { display: none; }
 
         .stack-container {
-            height: 100vh; width: 100%; 
-            display: flex; justify-content: center; align-items: center;
-            scroll-snap-align: center; 
-            position: sticky; top: 0;
-            will-change: transform;
+            height: 100vh; width: 100%; display: flex; justify-content: center;
+            align-items: center; scroll-snap-align: start; 
+            position: sticky; top: 30px; 
+            margin-bottom: -65vh; 
         }
 
-        .floating-template {
-            width: 88%; height: 78vh; border-radius: 45px; 
-            overflow: hidden; position: relative;
-            background: #000; box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-            transform: translateZ(0); /* Hardware Acceleration */
-            animation: cardBreathe 6s ease-in-out infinite;
+        /* TRANSPARENT BORDER WRAPPER */
+        .glass-frame {
+            padding: 15px; /* Size of the transparent border around the photo */
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 55px; /* Slightly larger than photo to match curves */
+            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
+            width: 88%; height: 75vh;
+            display: flex; align-items: center; justify-content: center;
+            animation: floatUI 6s ease-in-out infinite;
         }
 
-        @keyframes cardBreathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
+        .photo-card {
+            width: 100%; height: 100%; border-radius: 40px; 
+            overflow: hidden; position: relative; background: #fff;
         }
 
-        .floating-template img { width: 100%; height: 100%; object-fit: cover; }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* iOS Style Glass Bar */
-        .glass-text-bar {
-            position: absolute; bottom: 8%; left: 6%; right: 6%;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 22px; border-radius: 30px;
-            color: #000; font-weight: 900; 
-            font-size: 1.4rem; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        .overlay-text {
+            position: absolute; bottom: 8%; left: 0; right: 0;
+            color: #000; font-weight: 900; font-size: 1.6rem; text-align: center;
+            padding: 0 20px; text-shadow: 0 0 10px rgba(255,255,255,0.5);
         }
 
-        /* Swipe Hint */
-        .swipe-hint {
-            position: fixed; bottom: 20px; left: 50%;
-            transform: translateX(-50%); color: white;
-            font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6;
-            animation: bounce 2s infinite; z-index: 100;
-        }
-
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);} 40% {transform: translateY(-10px) translateX(-50%);} }
-
-        /* 3️⃣ PAGE 3: FINAL */
-        #page3 { background: var(--vibrant-violet); flex-direction: column; align-items: center; padding: 100px 20px; overflow-y: auto; }
-        .letter-box { background: rgba(255,255,255,0.95); padding: 45px; border-radius: 40px; width: 100%; max-width: 500px; color: #000; }
+        /* 3️⃣ PAGE 3: THISTLE FINAL */
+        #page3 { display: none; background: var(--thistle); flex-direction: column; align-items: center; padding: 100px 20px; height: 100vh; overflow-y: auto; }
+        .letter-box { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; color: black; box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
 
     </style>
 </head>
 <body onload="init()">
 
-    <div id="loading-screen">🤌🏻 loading...</div>
+    <div id="loading-screen">wait panu d chlm🤌🏻</div>
 
-    <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
+    <div id="page1" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="video.mp4.MP4" type="video/mp4"></video>
         <div class="login-capsule">
-            <div style="color:white; margin-bottom:15px; font-weight: 700;">For my Buji ma 🎀</div>
+            <div style="color:#333; margin-bottom:15px; font-weight: bold;">For my Buji ma 🎀</div>
             <input type="date" id="birthInput">
             <button class="btn-enter" onclick="checkLogin()">ENTER</button>
         </div>
     </div>
 
-    <div id="page2" class="page">
-        <div class="swipe-hint">SWIPE UP</div>
-        
-        <div class="stack-container">
-            <div class="floating-template"><img src="image1.jpg.JPG"><div class="glass-text-bar">Every moment...</div></div>
+    <div id="page2">
+        <div class="stack-container" style="z-index: 1;">
+            <div class="glass-frame"><div class="photo-card"><img src="image1.jpg.JPG"><div class="overlay-text">Every moment...</div></div></div>
         </div>
-        <div class="stack-container">
-            <div class="floating-template"><img src="image2.jpg.HEIC"><div class="glass-text-bar">With you...</div></div>
+        <div class="stack-container" style="z-index: 2;">
+            <div class="glass-frame"><div class="photo-card"><img src="image2.jpg.HEIC"><div class="overlay-text">With you...</div></div></div>
         </div>
-        <div class="stack-container">
-            <div class="floating-template"><img src="image3.jpg.HEIC"><div class="glass-text-bar">Is magical.</div></div>
+        <div class="stack-container" style="z-index: 3;">
+            <div class="glass-frame"><div class="photo-card"><img src="image3.jpg.HEIC"><div class="overlay-text">Is magical.</div></div></div>
         </div>
-        <div class="stack-container">
-            <div class="floating-template"><img src="image4.jpg.jpg"><div class="glass-text-bar">My peace.</div></div>
+        <div class="stack-container" style="z-index: 4;">
+            <div class="glass-frame"><div class="photo-card"><img src="image4.jpg.jpg"><div class="overlay-text">My peace.</div></div></div>
         </div>
-        <div class="stack-container">
-            <div class="floating-template"><img src="image5.jpg.HEIC"><div class="glass-text-bar">Always.</div></div>
+        <div class="stack-container" style="z-index: 5;">
+            <div class="glass-frame"><div class="photo-card"><img src="image5.jpg.HEIC"><div class="overlay-text">Always.</div></div></div>
         </div>
-        <div class="stack-container">
-            <div class="floating-template">
-                <img src="image6.jpg.HEIC">
-                <div class="glass-text-bar">
-                    I love you!
-                    <button onclick="goToFinal()" style="display:block; margin: 15px auto 0; background:#000; color:#fff; border:none; padding:10px 25px; border-radius:20px; font-weight:700;">OPEN HEART</button>
+        <div class="stack-container" style="z-index: 6;">
+            <div class="glass-frame">
+                <div class="photo-card">
+                    <img src="image6.jpg.HEIC">
+                    <div class="overlay-text">
+                        I love you!
+                        <button onclick="goToFinal()" style="display:block; margin: 15px auto 0; background:black; color:white; border:none; padding:10px 25px; border-radius:20px; font-weight:bold;">OPEN</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="page3" class="page">
+    <div id="page3">
         <div class="letter-box">
-            <h2 style="font-family: var(--royal-font);">My Buji ma,</h2>
+            <h2 style="font-family: var(--royal-font); margin-bottom: 20px;">My Buji ma,</h2>
             <p style="line-height: 1.8; font-size: 1.1rem;">[PASTE YOUR LETTER HERE]</p>
-            <button class="btn-enter" style="background:#000; color:#fff;" onclick="location.reload()">REPLAY</button>
+            <button class="btn-enter" onclick="location.reload()" style="margin-top: 20px;">RESET</button>
         </div>
     </div>
 
     <script>
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
+        const p3 = document.getElementById('page3');
         const video = document.getElementById('bg-video');
 
         function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 1200); }
@@ -177,16 +154,12 @@
 
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                video.pause();
-                video.src = "";
-                video.remove(); 
-                
-                p1.style.display = 'none'; 
-                p2.style.display = 'block';
+                video.pause(); video.src = ""; video.remove(); 
+                p1.style.display = 'none'; p2.style.display = 'block';
             }
         }
 
-        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; window.scrollTo(0,0); }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
     </script>
 </body>
 </html>
