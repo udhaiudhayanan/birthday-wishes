@@ -9,16 +9,16 @@
             --peach: #FFDAB9;
             --lavender: #E6E6FA;
             --amethyst: #9966CC; 
-            --glass: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.3);
-            --royal-font: "Didot", serif;
+            --deep-purple: #4b0082;
+            --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
+            --glass-border: rgba(255, 255, 255, 0.4);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: var(--peach); overflow: hidden;
-            font-family: -apple-system, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         #loading-screen {
@@ -27,75 +27,67 @@
             color: #333; font-family: var(--royal-font); font-style: italic;
         }
 
-        /* 1️⃣ PAGE 1: LOGIN */
-        .page { display: none; width: 100%; height: 100vh; position: relative; }
-        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; background: var(--peach); }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
-        
-        .login-capsule { 
-            position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center; 
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border); border-radius: 40px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            animation: floatUI 4s ease-in-out infinite;
+        .back-btn {
+            position: absolute; top: 25px; left: 20px; z-index: 100;
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
+            color: white; border: 1px solid var(--glass-border);
+            padding: 8px 15px; border-radius: 30px; font-family: var(--royal-font);
+            font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        @keyframes floatUI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        /* PAGE 1: LOGIN */
+        .page { display: none; width: 100%; height: 100vh; position: relative; }
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        
+        .login-container {
+            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 40px; animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+
+        .royal-title { color: #333; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; }
 
         input[type="date"] {
             width: 100%; padding: 12px; background: transparent; border: none; 
-            border-bottom: 2px solid #333; color: #333; text-align: center;
-            font-size: 1.1rem; margin-bottom: 20px; outline: none;
+            border-bottom: 2px solid #333; color: #333; font-size: 1.1rem;
+            margin-bottom: 20px; outline: none; text-align: center;
         }
 
-        .btn-enter { background: #333; color: white; border: none; padding: 12px; width: 100%; border-radius: 30px; font-weight: bold; }
-
-        /* 2️⃣ PAGE 2: FULL SCREEN PERSPECTIVE SCROLL */
-        #page2 { 
-            background-color: var(--lavender); 
-            overflow-y: scroll; scroll-snap-type: y mandatory;
-            height: 100vh; perspective: 1500px;
+        .btn-enter {
+            background: #333; color: white; border: none; padding: 12px; width: 100%; 
+            border-radius: 30px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
         }
+
+        #error-msg { color: #8b0000; font-family: var(--royal-font); font-size: 0.75rem; margin-top: 15px; display: none; }
+
+        /* PAGE 2: FULL SCREEN PERSPECTIVE SCROLL */
+        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; perspective: 1500px; }
         #page2::-webkit-scrollbar { display: none; }
 
-        .stack-container {
-            height: 100vh; width: 100%; display: flex; justify-content: center;
-            align-items: center; scroll-snap-align: start; 
-            position: sticky; top: 0;
-        }
+        .stack-container { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; scroll-snap-align: start; position: sticky; top: 0; }
 
-        .perspective-wrapper {
-            width: 100%; height: 100vh; /* Full Screen */
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex; flex-direction: column;
-            position: relative;
-        }
+        .perspective-wrapper { width: 100%; height: 100vh; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; }
 
         /* Full Width Top Transparent Header */
         .glass-header {
-            position: absolute; top: 0; left: 0; width: 100%;
-            min-height: 100px; background: linear-gradient(to bottom, var(--glass), transparent);
+            position: absolute; top: 0; left: 0; width: 100%; min-height: 100px; 
+            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
             backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             z-index: 5; display: flex; align-items: center; justify-content: center;
             padding: 20px; border-bottom: 1px solid var(--glass-border);
         }
 
-        .photo-card {
-            width: 100%; height: 100%; 
-            background: #fff; overflow: hidden;
-        }
-
+        .photo-card { width: 100%; height: 100%; background: #fff; overflow: hidden; }
         .photo-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .black-bold-text { 
-            color: #000; font-weight: 900; font-size: 1.8rem; 
-            text-align: center; line-height: 1.2; text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .black-bold-text { color: #000; font-weight: 900; font-size: 1.8rem; text-align: center; text-transform: uppercase; }
 
-        /* 3️⃣ PAGE 3: LETTER */
+        /* PAGE 3: LETTER */
         #page3 { background: var(--amethyst); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
-        .letter-box { background: white; padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; color: #333; }
+        .letter-box { background: white; padding: 40px; border-radius: 40px; max-width: 500px; width: 100%; color: var(--deep-purple); }
 
     </style>
 </head>
@@ -105,73 +97,79 @@
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
-        <div class="login-capsule">
-            <div style="color:#333; margin-bottom:15px; font-weight: bold;">For my Buji ma 🎀</div>
-            <input type="date" id="birthInput">
+        <div class="login-container">
+            <div class="royal-title">For my Buji ma 🎀<br>🤌🏻</div>
+            <input type="date" id="birthInput" onfocus="unmuteVideo()">
             <button class="btn-enter" onclick="checkLogin()">Enter</button>
+            <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
+        <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
+        
         <div class="stack-container" style="z-index: 1;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Thinking of you</div></div><div class="photo-card"><img src="img1.JPG"></div></div></div>
-        <div class="stack-container" style="z-index: 2;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Every moment</div></div><div class="photo-card"><img src="img2.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 3;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Is magical</div></div><div class="photo-card"><img src="img3.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 4;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My world</div></div><div class="photo-card"><img src="img4.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 5;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My peace</div></div><div class="photo-card"><img src="img5.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 6;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Always</div></div><div class="photo-card"><img src="img6.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 2;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Every single</div></div><div class="photo-card"><img src="img2.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 3;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">moment.</div></div><div class="photo-card"><img src="img3.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 4;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">You are</div></div><div class="photo-card"><img src="img4.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 5;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">my peace.</div></div><div class="photo-card"><img src="img5.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 6;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Always.</div></div><div class="photo-card"><img src="img6.jpg"></div></div></div>
         <div class="stack-container" style="z-index: 7;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Forever</div></div><div class="photo-card"><img src="img7.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 8;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">In my heart</div></div><div class="photo-card"><img src="img8.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 9;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Stay close</div></div><div class="photo-card"><img src="img9.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 8;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My Heart</div></div><div class="photo-card"><img src="img8.jpg"></div></div></div>
+        <div class="stack-container" style="z-index: 9;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My Everything</div></div><div class="photo-card"><img src="img9.jpg"></div></div></div>
+        
         <div class="stack-container" style="z-index: 10;">
             <div class="perspective-wrapper">
-                <div class="glass-header"><div class="black-bold-text">I Love You</div></div>
+                <div class="glass-header"><div class="black-bold-text">Stay Mine</div></div>
                 <div class="photo-card">
                     <img src="img10.jpg">
-                    <button onclick="goToFinal()" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); background:black; color:white; border:none; padding:15px 40px; border-radius:30px; font-weight:900; z-index: 10;">OPEN LETTER</button>
+                    <button class="btn-enter" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); width: auto; padding: 15px 40px; z-index: 10;" onclick="goToFinal()">Hold my Hand</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="page3" class="page">
+        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--deep-purple);" onclick="goBackToScroll()">← PHOTOS</button>
         <div class="letter-box">
             <h2 style="font-family: var(--royal-font); font-style: italic;">Dear Buji,</h2>
             <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
-            <button class="btn-enter" style="background:#000; margin-top: 20px;" onclick="location.reload()">Replay</button>
         </div>
     </div>
 
     <script>
+        const video = document.getElementById('bg-video');
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
+        const p3 = document.getElementById('page3');
         const wrappers = document.querySelectorAll('.perspective-wrapper');
 
-        function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 2000); }
-        function unmuteVideo() { document.getElementById('bg-video').muted = false; }
-
+        function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000); }
+        function unmuteVideo() { video.muted = false; }
+        
         function checkLogin() {
-            if (document.getElementById('birthInput').value === "2004-02-23") { 
-                const v = document.getElementById('bg-video'); v.pause(); v.remove();
+            const val = document.getElementById('birthInput').value;
+            if (val === "2004-02-23") { 
+                video.pause(); video.remove();
                 p1.style.display = 'none'; p2.style.display = 'block';
-            }
+            } else { document.getElementById('error-msg').style.display = 'block'; }
         }
 
-        /* 🏎️ Smooth Perspective Slide */
+        function goBackToLogin() { location.reload(); }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
+        function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
+
+        /* Perspective Logic */
         p2.addEventListener('scroll', () => {
             wrappers.forEach((wrapper) => {
                 const rect = wrapper.getBoundingClientRect();
-                // When rect.top is 0, card is centered. When negative, it's moving up.
                 if (rect.top < 0) {
-                    const xShift = Math.abs(rect.top) * 0.4; // Push Right
-                    const rotate = Math.abs(rect.top) * 0.05; // Tilt
+                    const xShift = Math.abs(rect.top) * 0.4;
+                    const rotate = Math.abs(rect.top) * 0.05;
                     wrapper.style.transform = `translateX(${xShift}px) rotateY(-${rotate}deg)`;
-                } else {
-                    wrapper.style.transform = `translateX(0px) rotateY(0deg)`;
-                }
+                } else { wrapper.style.transform = `translateX(0px) rotateY(0deg)`; }
             });
         });
-
-        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; window.scrollTo(0,0); }
     </script>
 </body>
 </html>
