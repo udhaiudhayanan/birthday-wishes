@@ -24,12 +24,13 @@
             color: var(--lavender); font-family: var(--royal-font);
         }
 
-        /* FIX 1: REDUCED BACK BUTTON TRANSPARENCY */
+        /* FIXED BACK BUTTON: VISIBLE GLASS STYLE */
         .back-nav {
-            position: fixed; top: 20px; left: 20px; z-index: 2000;
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(5px);
-            color: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255,255,255,0.1);
-            padding: 10px 15px; border-radius: 50%; cursor: pointer; display: none;
+            position: fixed; top: 25px; left: 20px; z-index: 2000;
+            background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px);
+            color: white; border: 1.5px solid white;
+            padding: 12px 18px; border-radius: 50px; cursor: pointer; 
+            display: none; font-weight: bold; font-size: 1rem;
         }
 
         /* PAGE 1: LOGIN */
@@ -39,7 +40,7 @@
         
         .login-container {
             position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center;
-            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(15px);
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.3); border-radius: 40px;
         }
 
@@ -48,9 +49,9 @@
             border: 1px solid var(--lavender); border-radius: 15px;
             color: white; font-size: 1rem; margin-bottom: 20px; outline: none; text-align: center;
         }
-        input[type="date"]::before { content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.6); }
+        input[type="date"]::before { content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.8); }
 
-        #error-msg { color: #ffb3b3; font-size: 0.7rem; margin-top: 10px; display: none; font-style: italic; }
+        #error-msg { color: #ffb3b3; font-size: 0.75rem; margin-top: 10px; display: none; font-weight: bold; }
 
         /* PAGE 2: LAVENDER SCROLL */
         #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; height: 100vh; }
@@ -60,29 +61,25 @@
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; 
             justify-content: center; align-items: center; 
-            position: relative; padding: 40px 20px;
+            position: relative; padding: 20px;
         }
 
         .fade-item { opacity: 0; transition: all 0.8s ease-out; transform: translateY(20px); }
         .show { opacity: 1 !important; transform: translateY(0) !important; }
 
-        .cosmos-title { font-size: 2.8rem; font-weight: 900; color: #000; letter-spacing: 5px; text-transform: uppercase; }
+        .cosmos-title { font-size: 2.5rem; font-weight: 900; color: #000; letter-spacing: 5px; text-transform: uppercase; text-align: center; }
         .typing-box { font-family: monospace; font-size: 1.1rem; color: #000; border-right: 2px solid #000; white-space: nowrap; overflow: hidden; width: 0; }
         .type-now { animation: typing 3s steps(30, end) forwards; }
         @keyframes typing { from { width: 0 } to { width: 100% } }
 
-        .scroll-down { position: absolute; bottom: 30px; animation: bounce 2s infinite; font-size: 0.8rem; color: #000; opacity: 0.6; }
-        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
-
         .btn-enter { background: #000; color: white; border: none; padding: 12px 40px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
-        .sub-txt { color: #555; font-style: italic; margin-top: 10px; text-align: center; font-size: 0.9rem; }
+        .sub-txt { color: #444; font-style: italic; margin-top: 10px; text-align: center; font-size: 0.95rem; }
     </style>
 </head>
 <body onload="init()">
 
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
-    
-    <button class="back-nav" id="universalBack" onclick="goBack()">←</button>
+    <button class="back-nav" id="universalBack" onclick="goBack()">← BACK</button>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
@@ -95,38 +92,51 @@
     </div>
 
     <div id="page2" class="page">
+        
         <section class="scroll-section">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 90%;">
                 <div class="fade-item"><img src="img1.JPG" style="width:100%; border-radius:10px;"></div>
-                <div class="fade-item" style="margin-top:20px;"><img src="img2.jpg" style="width:100%; border-radius:10px;"></div>
+                <div class="fade-item" style="margin-top:30px;"><img src="img2.jpg" style="width:100%; border-radius:10px;"></div>
             </div>
-            <div class="scroll-down">Scroll Down ↓</div>
+            <p class="sub-txt fade-item">Scroll Down to start ↓</p>
         </section>
 
         <section class="scroll-section">
             <div class="cosmos-title fade-item">COSMOS</div>
-            <p class="sub-txt fade-item">You are my universe.</p>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <img src="img3.jpg" class="fade-item" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+                <img src="img4.jpg" class="fade-item" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;">
+            </div>
         </section>
-        
+
         <section class="scroll-section">
-            <img src="img9.jpg" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;" class="fade-item">
-            <p class="sub-txt fade-item">The piece that was missing.</p>
+            <img src="img5.jpg" style="width: 150px; border-radius: 15px;" class="fade-item">
+            <p class="sub-txt fade-item">Tiny moments with you.</p>
         </section>
-        
+
         <section class="scroll-section">
             <div class="typing-box" id="typer">You are my peace...</div>
+            <img src="img6.jpg" class="fade-item" style="width: 60px; margin-top: 20px; border-radius: 50%;">
         </section>
-        
+
         <section class="scroll-section">
-            <div style="width: 85%; height: 40vh; background: white; border-radius: 25px; overflow: hidden;" class="fade-item">
-                <img src="img10.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="width: 80%; height: 45vh; background: #fff; border-radius: 20px; overflow: hidden;" class="fade-item">
+                <img src="img7.jpg" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
-            <p class="sub-txt fade-item">Simply Beautiful.</p>
+            <p class="sub-txt fade-item">My favorite view.</p>
+        </section>
+
+        <section class="scroll-section">
+            <div style="display: flex; gap: 15px;">
+                <img src="img8.jpg" class="fade-item" style="width: 100px; border-radius: 10px;">
+                <img src="img9.jpg" class="fade-item" style="width: 100px; border-radius: 10px; margin-top: 40px;">
+            </div>
+            <p class="sub-txt fade-item">Always & Forever.</p>
         </section>
 
         <section class="scroll-section">
             <div class="fade-item" style="text-align: center;">
-                <img src="img8.jpg" style="width: 200px; border-radius: 20px;">
+                <img src="img10.jpg" style="width: 250px; border-radius: 20px; margin-bottom: 20px;">
                 <button class="btn-enter" onclick="goToFinal()">READ THE LETTER</button>
             </div>
         </section>
@@ -136,7 +146,7 @@
         <div style="display: flex; flex-direction: column; align-items: center; padding: 100px 20px;">
             <div style="background: white; padding: 40px; border-radius: 30px; width: 100%; max-width: 500px;">
                 <h2 style="font-family: var(--royal-font);">Dear Buji,</h2>
-                <p>[PASTE LETTER]</p>
+                <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
             </div>
         </div>
     </div>
@@ -153,12 +163,12 @@
         
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                video.pause(); // FIX 3: AUDIO ARRESTED TO LOGIN
+                video.pause();
                 p1.style.display = 'none'; p2.style.display = 'block';
                 backBtn.style.display = 'block';
                 setupObserver();
             } else {
-                document.getElementById('error-msg').style.display = 'block'; // FIX 2: ERROR MSG TRIGGER
+                document.getElementById('error-msg').style.display = 'block';
             }
         }
 
@@ -167,7 +177,7 @@
             else { p2.style.display = 'none'; p1.style.display = 'flex'; backBtn.style.display = 'none'; video.play(); }
         }
 
-        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'block'; }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'block'; window.scrollTo(0,0); }
 
         function setupObserver() {
             const observer = new IntersectionObserver((entries) => {
@@ -177,8 +187,8 @@
                         if (entry.target.id === 'typer') entry.target.classList.add('type-now');
                     }
                 });
-            }, { threshold: 0.5 });
-            document.querySelectorAll('.fade-item, .scroll-section p, .typing-box').forEach(el => observer.observe(el));
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.fade-item, .typing-box, .sub-txt').forEach(el => observer.observe(el));
         }
     </script>
 </body>
