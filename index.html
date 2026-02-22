@@ -19,207 +19,151 @@
             font-family: -apple-system, sans-serif;
         }
 
-        #loading-screen {
-            position: fixed; inset: 0; background: #000; z-index: 1000;
-            display: flex; justify-content: center; align-items: center;
-            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
-        }
+        /* 1️⃣ PAGE 1: LOGIN (Restored) */
+        .page { display: none; width: 100%; height: 100vh; position: relative; z-index: 10; }
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; background: #000; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        .login-capsule { position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center; background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); border: 1px solid var(--glass-border); border-radius: 40px; }
+        .royal-title { color: white; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; }
+        input[type="date"] { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); border: none; border-bottom: 2px solid var(--lavender); color: white; font-size: 1.1rem; margin-bottom: 25px; text-align: center; border-radius: 10px; }
+        .btn-enter { background: transparent; color: white; border: 1px solid var(--lavender); padding: 12px; font-family: var(--royal-font); text-transform: uppercase; letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px; }
 
-        .back-btn {
-            position: absolute; top: 25px; left: 20px; z-index: 100;
-            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
-            color: white; border: 1px solid var(--glass-border);
-            padding: 8px 18px; border-radius: 30px; font-family: var(--royal-font);
-            font-size: 0.75rem; letter-spacing: 2px; cursor: pointer;
-        }
-
-        /* 1️⃣ PAGE 1: LOGIN */
-        .page { display: none; width: 100%; height: 100vh; position: relative; }
-        #page1 { 
-            display: flex; flex-direction: column; 
-            justify-content: flex-end; align-items: center; 
-            padding-bottom: 100px; background: #000;
-        }
-        
-        #bg-video {
-            width: 100%; height: 100%; object-fit: cover;
-            position: absolute; top: 0; left: 0; z-index: 1;
-        }
-
-        .login-capsule {
-            position: relative; z-index: 2; width: 280px;
-            padding: 30px 20px; text-align: center;
-            background: rgba(0, 0, 0, 0.25); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 40px;
-        }
-
-        .royal-title {
-            color: white; font-family: var(--royal-font); font-size: 1.4rem; 
-            margin-bottom: 20px; letter-spacing: 2px;
-        }
-
-        input[type="date"] {
-            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); 
-            border: none; border-bottom: 2px solid var(--lavender);
-            color: white; font-family: var(--royal-font); font-size: 1.1rem;
-            margin-bottom: 25px; outline: none; text-align: center; border-radius: 10px 10px 0 0;
-        }
-
-        .btn-enter {
-            background: transparent; color: white; border: 1px solid var(--lavender);
-            padding: 12px; font-family: var(--royal-font); text-transform: uppercase;
-            letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px;
-        }
-
-        /* 2️⃣ PAGE 2: COSMOS SCROLL (OPTIMIZED) */
+        /* 2️⃣ PAGE 2: COSMOS STACKING (LAG-FREE) */
         #page2 { 
             background-color: var(--lavender); 
-            overflow-y: scroll; scroll-snap-type: y mandatory;
-            /* Hardware acceleration fix for lag */
-            will-change: transform;
+            overflow-y: auto; 
+            scroll-snap-type: y mandatory;
+            height: 100vh;
         }
 
-        .cosmos-section {
-            height: 100vh; width: 100%; display: flex; 
-            justify-content: center; align-items: center; 
+        .stack-section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Aligns card to top for better stacking visual */
+            padding-top: 5vh;
             scroll-snap-align: start;
+            position: sticky; /* Key for stacking effect */
+            top: 0;
         }
 
-        .image-card {
-            width: 88%; height: 78vh; border-radius: 45px; 
-            overflow: hidden; position: relative;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: scale(0.88);
-            /* Force GPU usage */
-            transform-style: preserve-3d;
+        .cosmos-card {
+            width: 92%;
+            height: 85vh;
+            border-radius: 35px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
         }
 
-        .cosmos-section.active .image-card {
-            transform: scale(1);
-        }
-
-        .image-card img {
-            width: 100%; height: 100%;
+        .cosmos-card img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
-            /* Parallax removed for smoother Android performance */
         }
 
-        .typing-text {
-            position: absolute; bottom: 8%; left: 10%; right: 10%;
-            color: white; font-family: var(--royal-font);
-            font-weight: 600; font-size: 1.6rem;
-            text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+        /* The Faded Bottom Overlay */
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.7) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px 30px;
+        }
+
+        .card-text {
+            color: white;
+            font-family: var(--royal-font);
+            font-size: 1.7rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            opacity: 0.9;
         }
 
         /* 3️⃣ PAGE 3: FINAL */
-        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 90px 25px; overflow-y: auto; }
+        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; z-index: 100; }
         .letter-box { background: white; padding: 40px; border-radius: 30px; max-width: 500px; width: 100%; color: var(--deep-purple); }
 
+        .nav-btn {
+            position: fixed; top: 25px; left: 20px; z-index: 200;
+            background: rgba(255, 255, 255, 0.5); padding: 8px 15px; border-radius: 20px; border: none; font-size: 0.7rem;
+        }
     </style>
 </head>
 <body onload="init()">
 
-    <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
+    <div id="loading-screen" style="position:fixed; inset:0; background:#000; color:white; display:flex; justify-content:center; align-items:center; z-index:1000;">konjam wait panu d chlm🤌🏻</div>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
-        <video id="bg-video" autoplay loop playsinline muted>
-            <source src="video.mp4.MP4" type="video/mp4">
-        </video>
+        <video id="bg-video" autoplay loop playsinline muted><source src="video.mp4.MP4" type="video/mp4"></video>
         <div class="login-capsule">
             <div class="royal-title">For my Buji ma 🎀🤌🏻</div>
-            <input type="date" id="birthInput" onfocus="unmuteVideo()">
+            <input type="date" id="birthInput">
             <button class="btn-enter" onclick="checkLogin()">Enter</button>
-            <div id="error-msg" style="color:#ffb3b3; font-size: 0.7rem; margin-top:10px; display:none;">Correct ah podu👺</div>
+            <div id="error-msg" style="color:#ffb3b3; display:none; margin-top:10px; font-size:0.8rem;">Wrong date👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
-        <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
-
-        <div class="cosmos-section" data-text="Every single moment...">
-            <div class="image-card"><img src="image1.jpg.JPG"><div class="typing-text"></div></div>
+        <button class="nav-btn" onclick="goBackToLogin()">RESET</button>
+        
+        <div class="stack-section">
+            <div class="cosmos-card"><img src="image1.jpg.JPG"><div class="card-overlay"><div class="card-text">Every moment with you...</div></div></div>
         </div>
-
-        <div class="cosmos-section" data-text="You make life beautiful.">
-            <div class="image-card"><img src="image2.jpg.HEIC"><div class="typing-text"></div></div>
+        <div class="stack-section">
+            <div class="cosmos-card"><img src="image2.jpg.HEIC"><div class="card-overlay"><div class="card-text">Is a beautiful dream.</div></div></div>
         </div>
-
-        <div class="cosmos-section" data-text="Your smile is my peace.">
-            <div class="image-card"><img src="image3.jpg.HEIC"><div class="typing-text"></div></div>
+        <div class="stack-section">
+            <div class="cosmos-card"><img src="image3.jpg.HEIC"><div class="card-overlay"><div class="card-text">Your smile is my light.</div></div></div>
         </div>
-
-        <div class="cosmos-section" data-text="My constant support.">
-            <div class="image-card"><img src="image4.jpg.jpg"><div class="typing-text"></div></div>
+        <div class="stack-section">
+            <div class="cosmos-card"><img src="image4.jpg.jpg"><div class="card-overlay"><div class="card-text">My world is better with you.</div></div></div>
         </div>
-
-        <div class="cosmos-section" data-text="To the most special soul...">
-            <div class="image-card"><img src="image5.jpg.HEIC"><div class="typing-text"></div></div>
+        <div class="stack-section">
+            <div class="cosmos-card"><img src="image5.jpg.HEIC"><div class="card-overlay"><div class="card-text">Always and forever.</div></div></div>
         </div>
-
-        <div class="cosmos-section" data-text="I love you, Buji! 💜">
-            <div class="image-card">
+        <div class="stack-section">
+            <div class="cosmos-card">
                 <img src="image6.jpg.HEIC">
-                <div class="typing-text"></div>
-                <button class="btn-enter" style="position:absolute; bottom:20px; left:20%; width:60%;" onclick="goToFinal()">Read Letter</button>
+                <div class="card-overlay">
+                    <div class="card-text">I love you, Buji!</div>
+                    <button class="btn-enter" onclick="goToFinal()">Read Letter</button>
+                </div>
             </div>
         </div>
     </div>
 
     <div id="page3" class="page">
-        <button class="back-btn" style="color:var(--deep-purple); border-color:var(--deep-purple);" onclick="goBackToScroll()">← PHOTOS</button>
         <div class="letter-box">
-            <h2 style="font-family: var(--royal-font); font-style: italic;">Dear Buji,</h2>
-            <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
+            <h2 style="font-family: var(--royal-font);">Dear Buji,</h2>
+            <p>[PASTE YOUR LONG LETTER HERE]</p>
+            <button class="btn-enter" style="color:var(--deep-purple); border-color:var(--deep-purple);" onclick="goBackToScroll()">Back to Photos</button>
         </div>
     </div>
 
     <script>
-        const video = document.getElementById('bg-video');
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
         const p3 = document.getElementById('page3');
+        const video = document.getElementById('bg-video');
 
-        function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 1500); }
+        function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 1500); }
         function unmuteVideo() { video.muted = false; }
 
         function checkLogin() {
-            const val = document.getElementById('birthInput').value;
-            if (val === "2004-02-23") { // 🚨 UPDATE BIRTHDATE
-                video.pause();
+            if (document.getElementById('birthInput').value === "2004-02-23") { // 🚨 UPDATE DATE
                 p1.style.display = 'none'; p2.style.display = 'block';
+                document.body.style.overflow = 'auto';
             } else { document.getElementById('error-msg').style.display = 'block'; }
         }
 
-        // SMOOTH SCROLL OBSERVER
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const textEl = entry.target.querySelector('.typing-text');
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    if (textEl.innerHTML === "") {
-                        let text = entry.target.getAttribute('data-text');
-                        let i = 0;
-                        function type() {
-                            if (i < text.length) {
-                                textEl.innerHTML += text.charAt(i); i++;
-                                setTimeout(type, 50);
-                            }
-                        }
-                        type();
-                    }
-                } else {
-                    entry.target.classList.remove('active');
-                    textEl.innerHTML = ""; 
-                }
-            });
-        }, { threshold: 0.6 });
-
-        document.querySelectorAll('.cosmos-section').forEach(s => observer.observe(s));
-
-        function goBackToLogin() { p2.style.display = 'none'; p1.style.display = 'flex'; video.play(); }
-        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; }
+        function goBackToLogin() { p2.style.display = 'none'; p1.style.display = 'flex'; window.scrollTo(0,0); }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
         function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
     </script>
 </body>
