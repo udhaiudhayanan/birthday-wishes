@@ -9,7 +9,7 @@
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
             --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
-            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.4);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -29,16 +29,16 @@
             position: absolute; top: 25px; left: 20px; z-index: 100;
             background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(10px);
             color: white; border: 1px solid var(--glass-border);
-            padding: 8px 15px; border-radius: 2px; font-family: var(--royal-font);
+            padding: 8px 15px; border-radius: 30px; font-family: var(--royal-font);
             font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        /* PAGE 1: RESTORED TO PREVIOUS BOTTOM LAYOUT */
+        /* PAGE 1: FLOATING CAPSULE LAYOUT */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { 
             display: flex; flex-direction: column; 
             justify-content: flex-end; align-items: center; 
-            padding-bottom: 80px; 
+            padding-bottom: 100px; 
         }
         
         #bg-video {
@@ -46,43 +46,54 @@
             position: absolute; top: 0; left: 0; z-index: 1;
         }
 
+        /* The Floating Box Refined */
         .login-container {
-            position: relative; z-index: 2; width: 85%; max-width: 380px;
-            padding: 25px; text-align: center;
-            background: rgba(0, 0, 0, 0.2); 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            position: relative; z-index: 2; 
+            width: 280px; /* Smaller, compact width */
+            padding: 30px 20px; text-align: center;
+            background: rgba(0, 0, 0, 0.25); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
+            border-radius: 40px; /* Super soft edges */
+            animation: float 3s ease-in-out infinite; /* Soft floating effect */
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
 
         .royal-title {
-            color: white; font-family: var(--royal-font); font-size: 1.6rem; 
-            margin-bottom: 20px; letter-spacing: 3px; opacity: 0.9;
+            color: white; font-family: var(--royal-font); font-size: 1.4rem; 
+            margin-bottom: 20px; letter-spacing: 2px; opacity: 0.9;
+            line-height: 1.4;
         }
 
-        /* DATE LABEL: Increased Opacity & Underline */
         input[type="date"] {
-            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); 
-            border: none; border-bottom: 2px solid var(--lavender);
-            color: white; font-family: var(--royal-font); font-size: 1.1rem;
-            margin-bottom: 25px; outline: none; text-align: center;
-            border-radius: 4px 4px 0 0;
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); 
+            border: none; border-bottom: 1px solid var(--lavender);
+            color: white; font-family: var(--royal-font); font-size: 1rem;
+            margin-bottom: 20px; outline: none; text-align: center;
+            border-radius: 15px 15px 0 0;
         }
 
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.8; }
 
         .btn-enter {
             background: transparent; color: white; border: 1px solid var(--lavender);
-            padding: 15px; font-family: var(--royal-font); text-transform: uppercase;
-            letter-spacing: 6px; width: 100%; cursor: pointer; transition: 0.4s;
+            padding: 12px; font-family: var(--royal-font); text-transform: uppercase;
+            letter-spacing: 4px; width: 100%; cursor: pointer; transition: 0.4s;
+            border-radius: 30px; /* Soft pill-shaped button */
+            font-size: 0.9rem;
         }
         .btn-enter:active { background: var(--lavender); color: var(--deep-purple); }
 
         #error-msg { 
-            color: white; font-family: var(--royal-font); font-size: 0.8rem; font-style: italic;
-            margin-top: 15px; display: none; letter-spacing: 1px;
+            color: #ffb3b3; font-family: var(--royal-font); font-size: 0.75rem; font-style: italic;
+            margin-top: 15px; display: none;
         }
 
-        /* PAGE 2: SCROLL */
+        /* PAGE 2 & 3: (Restored as before) */
         #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; }
         .scroll-section {
             height: 100vh; width: 100%; scroll-snap-align: start;
@@ -90,17 +101,11 @@
             align-items: center; background-size: cover; background-position: center;
         }
         .scroll-text {
-            font-size: 3rem; font-weight: 800; color: white; text-align: center;
-            padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6); letter-spacing: -1px;
+            font-size: 2.5rem; font-weight: 800; color: white; text-align: center;
+            padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6);
         }
-
-        /* PAGE 3: FINAL */
-        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; }
-        .letter-box {
-            background: white; padding: 45px 35px; border-radius: 2px;
-            max-width: 550px; width: 100%; color: var(--deep-purple);
-            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
-        }
+        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
+        .letter-box { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 100%; color: var(--deep-purple); }
     </style>
 </head>
 <body onload="init()">
@@ -112,7 +117,7 @@
             <source src="video.mp4.MP4" type="video/mp4">
         </video>
         <div class="login-container">
-            <div class="royal-title">For my Buji ma 🎀🤌🏻</div>
+            <div class="royal-title">For my Buji ma 🎀<br>🤌🏻</div>
             <input type="date" id="birthInput" onfocus="unmuteVideo()">
             <button class="btn-enter" onclick="checkLogin()">Enter</button>
             <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
@@ -121,7 +126,7 @@
 
     <div id="page2" class="page">
         <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('image1.jpg.JPG');"><div class="scroll-text">Thinking of you.</div></section>
+        <section class="scroll-section" style="background-image: url('image1.jpg.JPG');"><div class="scroll-text">Thinking of you.</div></section>
         <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');"><div class="scroll-text">Every single</div></section>
         <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');"><div class="scroll-text">moment.</div></section>
         <section class="scroll-section" style="background-image: url('image4.jpg.jpg');"><div class="scroll-text">You are</div></section>
@@ -135,12 +140,8 @@
     <div id="page3" class="page">
         <button class="back-btn" style="color: var(--deep-purple); border-color: var(--deep-purple);" onclick="goBackToScroll()">← PHOTOS</button>
         <div class="letter-box">
-            <h2 style="font-family: var(--royal-font); font-style: italic; font-weight: 200; font-size: 2rem;">Dear Buji,</h2>
-            <p style="line-height: 2; font-size: 1.05rem; color: #444;">
-                [PASTE YOUR FULL LETTER HERE]
-                <br><br>
-                Happy Birthday! 💜
-            </p>
+            <h2 style="font-family: var(--royal-font); font-style: italic;">Dear Buji,</h2>
+            <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
         </div>
     </div>
 
@@ -150,45 +151,19 @@
         const p2 = document.getElementById('page2');
         const p3 = document.getElementById('page3');
 
-        function init() {
-            setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
-        }
-
+        function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000); }
         function unmuteVideo() { video.muted = false; }
-
         function checkLogin() {
             const val = document.getElementById('birthInput').value;
-            const secret = "2004-02-23"; // 🚨 EDIT THIS DATE (YYYY-MM-DD)
-            if (val === secret) {
+            if (val === "2004-02-23") { // 🚨 EDIT YOUR DATE
                 video.pause();
-                p1.style.display = 'none';
-                p2.style.display = 'block';
-                p2.scrollTop = 0;
+                p1.style.display = 'none'; p2.style.display = 'block';
                 document.body.style.overflow = 'auto';
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
-            }
+            } else { document.getElementById('error-msg').style.display = 'block'; }
         }
-
-        function goBackToLogin() {
-            p2.style.display = 'none';
-            p1.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            video.currentTime = 0;
-            video.play();
-        }
-
-        function goToFinal() {
-            p2.style.display = 'none';
-            p3.style.display = 'flex';
-            window.scrollTo(0,0);
-        }
-
-        function goBackToScroll() {
-            p3.style.display = 'none';
-            p2.style.display = 'block';
-            p2.scrollTop = p2.scrollHeight;
-        }
+        function goBackToLogin() { p2.style.display = 'none'; p1.style.display = 'flex'; video.play(); }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
+        function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
     </script>
 </body>
 </html>
