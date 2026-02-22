@@ -24,6 +24,14 @@
             color: var(--lavender); font-family: var(--royal-font);
         }
 
+        /* TRANSPARENT BACK BUTTON */
+        .back-nav {
+            position: fixed; top: 20px; left: 20px; z-index: 2000;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            color: white; border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 15px; border-radius: 50%; cursor: pointer; display: none;
+        }
+
         /* PAGE 1: LOGIN */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
@@ -35,51 +43,60 @@
             border: 1px solid rgba(255,255,255,0.3); border-radius: 40px;
         }
 
-        /* TEXT INSIDE DATE TABLE */
         input[type="date"] {
             width: 100%; padding: 12px; background: rgba(255,255,255,0.1); 
             border: 1px solid var(--lavender); border-radius: 15px;
             color: white; font-size: 1rem; margin-bottom: 20px; outline: none; text-align: center;
         }
-        input[type="date"]::before {
-            content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.6); margin-right: 5px;
-        }
+        input[type="date"]::before { content: "Tap here 👇🏻  "; color: rgba(255,255,255,0.6); }
 
-        /* PAGE 2: LAVENDER SCROLL */
-        #page2 { background: var(--lavender); overflow-y: scroll; scroll-behavior: smooth; }
+        /* PAGE 2: LAVENDER SCROLL WITH PAGE BREAKS */
+        #page2 { 
+            background: var(--lavender); 
+            overflow-y: scroll; 
+            scroll-snap-type: y mandatory; /* Page Break Logic */
+            height: 100vh;
+        }
         #page2::-webkit-scrollbar { display: none; }
 
-        /* MASONRY FADE SECTION */
-        .masonry-grid { padding: 40px 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .fade-item { 
-            width: 100%; border-radius: 10px; overflow: hidden; 
-            opacity: 0; transform: scale(0.9); transition: all 0.5s ease-out; 
-        }
-        .fade-item img { width: 100%; display: block; object-fit: cover; }
-
-        /* NARRATIVE SECTIONS */
         .scroll-section {
-            height: 100vh; width: 100%; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; padding: 20px;
+            height: 100vh; width: 100%; scroll-snap-align: start;
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; 
+            position: relative; padding: 40px 20px;
         }
-        .cosmos-title { font-size: 2.5rem; font-weight: 900; color: #000; letter-spacing: 5px; opacity: 0; transition: 1s; }
-        .tiny-circle { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; opacity: 0; transition: 1s; }
-        .typing-box { font-family: monospace; font-size: 1.1rem; color: #000; white-space: nowrap; overflow: hidden; width: 0; border-right: 2px solid #000; }
-        .template-card { width: 85%; height: 50vh; background: white; border-radius: 20px; overflow: hidden; opacity: 0; transition: 1s; }
+
+        /* CONTENT STYLES */
+        .masonry-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 400px; }
+        .fade-item { opacity: 0; transition: all 0.8s ease-out; transform: translateY(20px); }
+        .fade-item img { width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         
+        .cosmos-title { font-size: 2.8rem; font-weight: 900; color: #000; letter-spacing: 5px; text-transform: uppercase; }
+        .typing-box { font-family: monospace; font-size: 1.1rem; color: #000; border-right: 2px solid #000; white-space: nowrap; overflow: hidden; width: 0; }
+        
+        /* SCROLL DOWN INDICATOR */
+        .scroll-down {
+            position: absolute; bottom: 30px; animation: bounce 2s infinite;
+            font-size: 0.8rem; color: #000; font-weight: bold; opacity: 0.6;
+        }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+
         /* ACTIVE STATES */
-        .show { opacity: 1 !important; transform: scale(1) !important; }
+        .show { opacity: 1 !important; transform: translateY(0) !important; }
         .type-now { animation: typing 3s steps(30, end) forwards; }
         @keyframes typing { from { width: 0 } to { width: 100% } }
 
-        .btn-enter { background: #000; color: white; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
+        .btn-enter { background: #000; color: white; border: none; padding: 12px 40px; border-radius: 30px; font-weight: bold; margin-top: 20px; }
+        .sub-txt { color: #555; font-style: italic; margin-top: 10px; text-align: center; font-size: 0.9rem; max-width: 80%; }
     </style>
 </head>
 <body onload="init()">
 
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
+    
+    <button class="back-nav" id="universalBack" onclick="goBack()">←</button>
 
-    <div id="page1" class="page" onclick="unmuteVideo()">
+    <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
         <div class="login-container">
             <h2 style="color:white; font-family: var(--royal-font);">For my Buji🎀</h2>
@@ -89,50 +106,72 @@
     </div>
 
     <div id="page2" class="page">
-        <div class="masonry-grid">
-            <div class="fade-item"><img src="img1.JPG"></div>
-            <div class="fade-item" style="margin-top: 50px;"><img src="img2.jpg"></div>
-            <div class="fade-item"><img src="img3.jpg"></div>
-            <div class="fade-item"><img src="img4.jpg"></div>
-            <div class="fade-item" style="margin-top: -30px;"><img src="img5.jpg"></div>
-            <div class="fade-item"><img src="img6.jpg"></div>
-        </div>
-
-        <section class="scroll-section"><div class="cosmos-title fade-item">COSMOS</div></section>
-        
         <section class="scroll-section">
-            <img src="img7.jpg" class="tiny-circle fade-item">
-            <p class="fade-item" style="color: #000; font-weight: bold;">Tiny moments.</p>
-        </section>
-        
-        <section class="scroll-section"><div class="typing-box" id="typer">You are my universe...</div></section>
-        
-        <section class="scroll-section">
-            <div class="template-card fade-item"><img src="img8.jpg" style="width:100%; height:100%; object-fit:cover;"></div>
-            <p class="fade-item" style="color:#000; margin-top:10px;">My favorite person.</p>
+            <div class="masonry-mini-grid">
+                <div class="fade-item" style="transition-delay: 0.2s;"><img src="img1.JPG"></div>
+                <div class="fade-item" style="transition-delay: 0.4s; margin-top: 20px;"><img src="img2.jpg"></div>
+                <div class="fade-item" style="transition-delay: 0.6s;"><img src="img3.jpg"></div>
+                <div class="fade-item" style="transition-delay: 0.8s;"><img src="img4.jpg"></div>
+            </div>
+            <p class="sub-txt fade-item">A collection of us.</p>
+            <div class="scroll-down">Scroll Down ↓</div>
         </section>
 
         <section class="scroll-section">
-            <img src="img9.jpg" style="width: 150px; border-radius: 10px;" class="fade-item">
-            <div class="cosmos-title fade-item" style="font-size: 1.5rem; margin-top:10px;">Always Forever</div>
+            <div class="cosmos-title fade-item">COSMOS</div>
+            <p class="sub-txt fade-item">You are the stars in my dark sky.</p>
+        </section>
+        
+        <section class="scroll-section">
+            <img src="img5.jpg" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" class="fade-item">
+            <div class="cosmos-title fade-item" style="font-size: 1.5rem; margin-top: 15px;">MY UNIVERSE</div>
+            <p class="sub-txt fade-item">Every atom of me loves every atom of you.</p>
+        </section>
+        
+        <section class="scroll-section">
+            <div class="typing-box" id="typer">You are my peace in this chaos...</div>
+            <p class="sub-txt fade-item" style="margin-top: 30px; opacity: 0.4 !important;">Keep scrolling, Buji.</p>
+        </section>
+        
+        <section class="scroll-section">
+            <div style="width: 85%; height: 50vh; background: white; border-radius: 25px; overflow: hidden;" class="fade-item">
+                <img src="img6.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <p class="sub-txt fade-item">My favorite notification.</p>
         </section>
 
         <section class="scroll-section">
-            <img src="img10.jpg" style="width: 100%; height: 40vh; object-fit: contain;" class="fade-item">
-            <button class="btn-enter" onclick="goToFinal()">OPEN LETTER</button>
+            <div class="fade-item" style="text-align: center;">
+                <img src="img7.jpg" style="width: 60px; height: 60px; border-radius: 10px; margin-bottom: 10px;">
+                <div class="cosmos-title" style="font-size: 1.2rem;">Always & Forever</div>
+                <p class="sub-txt">No matter where we go,<br>I'll always find my way back to you.</p>
+            </div>
+        </section>
+
+        <section class="scroll-section">
+            <div class="fade-item" style="text-align: center;">
+                <img src="img8.jpg" style="width: 200px; border-radius: 20px; margin-bottom: 20px;">
+                <div class="cosmos-title" style="font-size: 1rem;">One last thing...</div>
+                <button class="btn-enter" onclick="goToFinal()">READ THE LETTER</button>
+            </div>
         </section>
     </div>
 
-    <div id="page3" class="page" style="background: var(--lavender); flex-direction: column; align-items: center; justify-content: center;">
-        <div style="background: white; padding: 40px; border-radius: 20px; max-width: 85%;">
-            <h2 style="color: var(--deep-purple);">Dear Buji,</h2>
-            <p>[YOUR LETTER HERE]</p>
+    <div id="page3" class="page" style="background: var(--lavender); overflow-y: auto;">
+        <div style="display: flex; flex-direction: column; align-items: center; padding: 100px 20px;">
+            <div style="background: white; padding: 40px; border-radius: 30px; width: 100%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+                <h2 style="font-family: var(--royal-font); color: var(--deep-purple);">Dear Buji,</h2>
+                <p style="line-height: 1.8; color: #333;">[PASTE YOUR LONG LETTER HERE]</p>
+                <div style="margin-top: 40px; opacity: 0.3; font-size: 0.8rem; text-align: center;">With all my love.</div>
+            </div>
         </div>
     </div>
 
     <script>
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
+        const p3 = document.getElementById('page3');
+        const backBtn = document.getElementById('universalBack');
 
         function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 2000); }
         function unmuteVideo() { document.getElementById('bg-video').muted = false; }
@@ -140,30 +179,34 @@
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
                 p1.style.display = 'none'; p2.style.display = 'block';
-                window.addEventListener('scroll', handleFade, true);
+                backBtn.style.display = 'block';
+                setupObserver();
             }
         }
 
-        function handleFade() {
-            const items = document.querySelectorAll('.fade-item');
-            items.forEach(item => {
-                const rect = item.getBoundingClientRect();
-                const viewHeight = window.innerHeight;
-                // Fade in when entering center, fade out when leaving
-                if (rect.top > 0 && rect.top < viewHeight * 0.8) {
-                    item.classList.add('show');
-                } else {
-                    item.classList.remove('show');
-                }
-            });
-
-            const typer = document.getElementById('typer');
-            if (typer.getBoundingClientRect().top < window.innerHeight * 0.7) {
-                typer.classList.add('type-now');
+        function goBack() {
+            if (p3.style.display === 'flex' || p3.style.display === 'block') {
+                p3.style.display = 'none'; p2.style.display = 'block';
+            } else if (p2.style.display === 'block') {
+                p2.style.display = 'none'; p1.style.display = 'flex';
+                backBtn.style.display = 'none';
             }
         }
 
-        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; }
+        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'block'; }
+
+        function setupObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                        if (entry.target.id === 'typer') entry.target.classList.add('type-now');
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.fade-item, .scroll-section div, .scroll-section p').forEach(el => observer.observe(el));
+        }
     </script>
 </body>
 </html>
