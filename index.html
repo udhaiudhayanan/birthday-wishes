@@ -6,9 +6,7 @@
     <title>For My Buji ma 🎀</title>
     <style>
         :root {
-            --peach: #FFDAB9;
             --lavender: #E6E6FA;
-            --amethyst: #9966CC; 
             --deep-purple: #4b0082;
             --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
             --glass-border: rgba(255, 255, 255, 0.4);
@@ -17,14 +15,14 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: var(--peach); overflow: hidden;
+            background-color: #000; overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         #loading-screen {
-            position: fixed; inset: 0; background: var(--peach); z-index: 1000;
+            position: fixed; inset: 0; background: #000; z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            color: #333; font-family: var(--royal-font); font-style: italic;
+            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
         }
 
         .back-btn {
@@ -35,60 +33,79 @@
             font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        /* PAGE 1: LOGIN */
+        /* PAGE 1: FLOATING CAPSULE LAYOUT */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
-        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
+        #page1 { 
+            display: flex; flex-direction: column; 
+            justify-content: flex-end; align-items: center; 
+            padding-bottom: 100px; 
+        }
         
-        .login-container {
-            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 40px; animation: float 3s ease-in-out infinite;
+        #bg-video {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0; z-index: 1;
         }
 
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        /* The Floating Box Refined */
+        .login-container {
+            position: relative; z-index: 2; 
+            width: 280px; 
+            padding: 30px 20px; text-align: center;
+            background: rgba(0, 0, 0, 0.25); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px; 
+            animation: float 3s ease-in-out infinite; 
+        }
 
-        .royal-title { color: #333; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .royal-title {
+            color: white; font-family: var(--royal-font); font-size: 1.4rem; 
+            margin-bottom: 20px; letter-spacing: 2px; opacity: 0.9;
+            line-height: 1.4;
+        }
 
         input[type="date"] {
-            width: 100%; padding: 12px; background: transparent; border: none; 
-            border-bottom: 2px solid #333; color: #333; font-size: 1.1rem;
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); 
+            border: none; border-bottom: 1px solid var(--lavender);
+            color: white; font-family: var(--royal-font); font-size: 1rem;
             margin-bottom: 20px; outline: none; text-align: center;
+            border-radius: 15px 15px 0 0;
         }
+
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.8; }
 
         .btn-enter {
-            background: #333; color: white; border: none; padding: 12px; width: 100%; 
-            border-radius: 30px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;
+            background: transparent; color: white; border: 1px solid var(--lavender);
+            padding: 12px; font-family: var(--royal-font); text-transform: uppercase;
+            letter-spacing: 4px; width: 100%; cursor: pointer; transition: 0.4s;
+            border-radius: 30px; 
+            font-size: 0.9rem;
+        }
+        .btn-enter:active { background: var(--lavender); color: var(--deep-purple); }
+
+        #error-msg { 
+            color: #ffb3b3; font-family: var(--royal-font); font-size: 0.75rem; font-style: italic;
+            margin-top: 15px; display: none;
         }
 
-        #error-msg { color: #8b0000; font-family: var(--royal-font); font-size: 0.75rem; margin-top: 15px; display: none; }
-
-        /* PAGE 2: FULL SCREEN PERSPECTIVE SCROLL */
-        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; perspective: 1500px; }
-        #page2::-webkit-scrollbar { display: none; }
-
-        .stack-container { height: 100vh; width: 100%; display: flex; justify-content: center; align-items: center; scroll-snap-align: start; position: sticky; top: 0; }
-
-        .perspective-wrapper { width: 100%; height: 100vh; transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; }
-
-        /* Full Width Top Transparent Header */
-        .glass-header {
-            position: absolute; top: 0; left: 0; width: 100%; min-height: 100px; 
-            background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            z-index: 5; display: flex; align-items: center; justify-content: center;
-            padding: 20px; border-bottom: 1px solid var(--glass-border);
+        /* PAGE 2 & 3 */
+        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; }
+        .scroll-section {
+            height: 100vh; width: 100%; scroll-snap-align: start;
+            display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; background-size: cover; background-position: center;
         }
-
-        .photo-card { width: 100%; height: 100%; background: #fff; overflow: hidden; }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        .black-bold-text { color: #000; font-weight: 900; font-size: 1.8rem; text-align: center; text-transform: uppercase; }
-
-        /* PAGE 3: LETTER */
-        #page3 { background: var(--amethyst); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
-        .letter-box { background: white; padding: 40px; border-radius: 40px; max-width: 500px; width: 100%; color: var(--deep-purple); }
-
+        .scroll-text {
+            font-size: 2.5rem; font-weight: 800; color: white; text-align: center;
+            padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+        }
+        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
+        .letter-box { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 100%; color: var(--deep-purple); }
     </style>
 </head>
 <body onload="init()">
@@ -96,7 +113,9 @@
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
-        <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
+        <video id="bg-video" autoplay loop playsinline muted>
+            <source src="intro.MP4" type="video/mp4">
+        </video>
         <div class="login-container">
             <div class="royal-title">For my Buji ma 🎀<br>🤌🏻</div>
             <input type="date" id="birthInput" onfocus="unmuteVideo()">
@@ -107,26 +126,19 @@
 
     <div id="page2" class="page">
         <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
-        
-        <div class="stack-container" style="z-index: 1;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Thinking of you</div></div><div class="photo-card"><img src="img1.JPG"></div></div></div>
-        <div class="stack-container" style="z-index: 2;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Every single</div></div><div class="photo-card"><img src="img2.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 3;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">moment.</div></div><div class="photo-card"><img src="img3.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 4;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">You are</div></div><div class="photo-card"><img src="img4.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 5;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">my peace.</div></div><div class="photo-card"><img src="img5.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 6;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Always.</div></div><div class="photo-card"><img src="img6.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 7;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">Forever</div></div><div class="photo-card"><img src="img7.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 8;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My Heart</div></div><div class="photo-card"><img src="img8.jpg"></div></div></div>
-        <div class="stack-container" style="z-index: 9;"><div class="perspective-wrapper"><div class="glass-header"><div class="black-bold-text">My Everything</div></div><div class="photo-card"><img src="img9.jpg"></div></div></div>
-        
-        <div class="stack-container" style="z-index: 10;">
-            <div class="perspective-wrapper">
-                <div class="glass-header"><div class="black-bold-text">Stay Mine</div></div>
-                <div class="photo-card">
-                    <img src="img10.jpg">
-                    <button class="btn-enter" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); width: auto; padding: 15px 40px; z-index: 10;" onclick="goToFinal()">Hold my Hand</button>
-                </div>
-            </div>
-        </div>
+        <section class="scroll-section" style="background-image: url('img1.JPG');"><div class="scroll-text">Thinking of you.</div></section>
+        <section class="scroll-section" style="background-image: url('img2.jpg');"><div class="scroll-text">Every single</div></section>
+        <section class="scroll-section" style="background-image: url('img3.jpg');"><div class="scroll-text">moment.</div></section>
+        <section class="scroll-section" style="background-image: url('img4.jpg');"><div class="scroll-text">You are</div></section>
+        <section class="scroll-section" style="background-image: url('img5.jpg');"><div class="scroll-text">my peace.</div></section>
+        <section class="scroll-section" style="background-image: url('img6.jpg');"><div class="scroll-text">Always.</div></section>
+        <section class="scroll-section" style="background-image: url('img7.jpg');"><div class="scroll-text">In my heart.</div></section>
+        <section class="scroll-section" style="background-image: url('img8.jpg');"><div class="scroll-text">My world.</div></section>
+        <section class="scroll-section" style="background-image: url('img9.jpg');"><div class="scroll-text">My everything.</div></section>
+        <section class="scroll-section" style="background-image: url('img10.jpg');">
+            <div class="scroll-text">I Love You.</div>
+            <button class="btn-enter" style="width: auto; padding: 12px 30px; margin-top: 25px;" onclick="goToFinal()">Hold my Hand</button>
+        </section>
     </div>
 
     <div id="page3" class="page">
@@ -142,34 +154,20 @@
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
         const p3 = document.getElementById('page3');
-        const wrappers = document.querySelectorAll('.perspective-wrapper');
 
         function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000); }
         function unmuteVideo() { video.muted = false; }
-        
         function checkLogin() {
             const val = document.getElementById('birthInput').value;
             if (val === "2004-02-23") { 
-                video.pause(); video.remove();
+                video.pause();
                 p1.style.display = 'none'; p2.style.display = 'block';
+                document.body.style.overflow = 'auto';
             } else { document.getElementById('error-msg').style.display = 'block'; }
         }
-
-        function goBackToLogin() { location.reload(); }
+        function goBackToLogin() { p2.style.display = 'none'; p1.style.display = 'flex'; video.play(); }
         function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
         function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
-
-        /* Perspective Logic */
-        p2.addEventListener('scroll', () => {
-            wrappers.forEach((wrapper) => {
-                const rect = wrapper.getBoundingClientRect();
-                if (rect.top < 0) {
-                    const xShift = Math.abs(rect.top) * 0.4;
-                    const rotate = Math.abs(rect.top) * 0.05;
-                    wrapper.style.transform = `translateX(${xShift}px) rotateY(-${rotate}deg)`;
-                } else { wrapper.style.transform = `translateX(0px) rotateY(0deg)`; }
-            });
-        });
     </script>
 </body>
 </html>
