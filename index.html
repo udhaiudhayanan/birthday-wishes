@@ -24,7 +24,6 @@
             color: var(--lavender); font-family: var(--royal-font);
         }
 
-        /* FIXED BACK BUTTON: VISIBLE GLASS STYLE */
         .back-nav {
             position: fixed; top: 25px; left: 20px; z-index: 2000;
             background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(10px);
@@ -33,7 +32,6 @@
             display: none; font-weight: bold; font-size: 1rem;
         }
 
-        /* PAGE 1: LOGIN */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
         #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
         #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
@@ -53,7 +51,6 @@
 
         #error-msg { color: #ffb3b3; font-size: 0.75rem; margin-top: 10px; display: none; font-weight: bold; }
 
-        /* PAGE 2: LAVENDER SCROLL */
         #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; height: 100vh; }
         #page2::-webkit-scrollbar { display: none; }
 
@@ -92,7 +89,6 @@
     </div>
 
     <div id="page2" class="page">
-        
         <section class="scroll-section">
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 90%;">
                 <div class="fade-item"><img src="img1.JPG" style="width:100%; border-radius:10px;"></div>
@@ -121,7 +117,7 @@
 
         <section class="scroll-section">
             <div style="width: 80%; height: 45vh; background: #fff; border-radius: 20px; overflow: hidden;" class="fade-item">
-                <img src="img7.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                <img src="img10.jpg" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <p class="sub-txt fade-item">My favorite view.</p>
         </section>
@@ -136,7 +132,7 @@
 
         <section class="scroll-section">
             <div class="fade-item" style="text-align: center;">
-                <img src="img10.jpg" style="width: 250px; border-radius: 20px; margin-bottom: 20px;">
+                <img src="img7.jpg" style="width: 250px; border-radius: 20px; margin-bottom: 20px;">
                 <button class="btn-enter" onclick="goToFinal()">READ THE LETTER</button>
             </div>
         </section>
