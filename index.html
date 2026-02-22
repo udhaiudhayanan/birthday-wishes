@@ -8,35 +8,34 @@
         :root {
             --peach: #FFDAB9;
             --lavender: #E6E6FA;
-            --thistle: #D8BFD8; 
-            --loading-purple: #4b0082;
-            /* The Transparent Border Color */
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --royal-font: "Didot", serif;
+            --wisteria: #C9A0DC; /* A popular, vibrant lavender for Page 3 */
+            --glass: rgba(255, 255, 255, 0.35);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: var(--peach); overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+            font-family: -apple-system, sans-serif;
         }
 
+        /* 🟣 Loading Page (Peach) */
         #loading-screen {
-            position: fixed; inset: 0; background: var(--loading-purple); z-index: 1000;
+            position: fixed; inset: 0; background: var(--peach); z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            color: white; font-family: var(--royal-font); font-style: italic;
+            color: #333; font-weight: bold; font-style: italic;
         }
 
-        /* 1️⃣ PAGE 1: PEACH LOGIN */
-        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; height: 100vh; position: relative; }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; opacity: 0.9; }
+        /* 1️⃣ PAGE 1: LOGIN */
+        .page { display: none; width: 100%; height: 100vh; position: relative; }
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
         
         .login-capsule { 
             position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center; 
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border); border-radius: 40px; 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.1);
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 40px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             animation: floatUI 4s ease-in-out infinite;
         }
 
@@ -44,52 +43,60 @@
 
         input[type="date"] {
             width: 100%; padding: 12px; background: transparent; border: none; 
-            border-bottom: 2px solid #555; color: #333; text-align: center;
+            border-bottom: 2px solid #333; color: #333; text-align: center;
             font-size: 1.1rem; margin-bottom: 20px; outline: none;
         }
 
         .btn-enter { background: #333; color: white; border: none; padding: 12px; width: 100%; border-radius: 30px; font-weight: bold; }
 
-        /* 2️⃣ PAGE 2: LAVENDER LAYERED STACK WITH GLASS BORDERS */
-        #page2 { display: none; background-color: var(--lavender); overflow-y: auto; scroll-snap-type: y proximity; height: 100vh; }
+        /* 2️⃣ PAGE 2: PERSPECTIVE SLIDE (Lavender) */
+        #page2 { 
+            background-color: var(--lavender); 
+            overflow-y: scroll; scroll-snap-type: y proximity;
+            height: 100vh; perspective: 1000px;
+        }
         #page2::-webkit-scrollbar { display: none; }
 
         .stack-container {
             height: 100vh; width: 100%; display: flex; justify-content: center;
             align-items: center; scroll-snap-align: start; 
-            position: sticky; top: 30px; 
-            margin-bottom: -65vh; 
+            position: sticky; top: 0;
+            margin-bottom: -55vh; /* Card peeking */
         }
 
-        /* TRANSPARENT BORDER WRAPPER */
-        .glass-frame {
-            padding: 15px; /* Size of the transparent border around the photo */
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1.5px solid var(--glass-border);
-            border-radius: 55px; /* Slightly larger than photo to match curves */
-            box-shadow: 0 20px 45px rgba(0,0,0,0.1);
-            width: 88%; height: 75vh;
-            display: flex; align-items: center; justify-content: center;
-            animation: floatUI 6s ease-in-out infinite;
+        .perspective-wrapper {
+            width: 85%; height: 70vh;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: floatUI 5s ease-in-out infinite;
+        }
+
+        /* The Glass Border "Lengthy" Header & Footer */
+        .glass-header {
+            height: 40px; width: 100%; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 20px 20px 0 0; border: 1px solid rgba(255,255,255,0.3);
         }
 
         .photo-card {
-            width: 100%; height: 100%; border-radius: 40px; 
-            overflow: hidden; position: relative; background: #fff;
+            width: 100%; height: calc(100% - 80px); 
+            background: #fff; overflow: hidden;
         }
 
         .photo-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .overlay-text {
-            position: absolute; bottom: 8%; left: 0; right: 0;
-            color: #000; font-weight: 900; font-size: 1.6rem; text-align: center;
-            padding: 0 20px; text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        .glass-footer {
+            min-height: 50px; width: 100%; background: var(--glass);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 0 0 25px 25px; border: 1px solid rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            padding: 10px;
         }
 
-        /* 3️⃣ PAGE 3: THISTLE FINAL */
-        #page3 { display: none; background: var(--thistle); flex-direction: column; align-items: center; padding: 100px 20px; height: 100vh; overflow-y: auto; }
-        .letter-box { background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; color: black; box-shadow: 0 15px 40px rgba(0,0,0,0.08); }
+        .black-bold-text { color: #000; font-weight: 900; font-size: 1.2rem; text-align: center; }
+
+        /* 3️⃣ PAGE 3: FINAL (Wisteria) */
+        #page3 { background: var(--wisteria); flex-direction: column; align-items: center; padding: 100px 20px; overflow-y: auto; }
+        .letter-box { background: white; padding: 40px; border-radius: 40px; width: 100%; max-width: 500px; color: black; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
     </style>
 </head>
@@ -97,8 +104,8 @@
 
     <div id="loading-screen">wait panu d chlm🤌🏻</div>
 
-    <div id="page1" onclick="unmuteVideo()">
-        <video id="bg-video" autoplay loop playsinline muted><source src="video.mp4.MP4" type="video/mp4"></video>
+    <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
+        <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
         <div class="login-capsule">
             <div style="color:#333; margin-bottom:15px; font-weight: bold;">For my Buji ma 🎀</div>
             <input type="date" id="birthInput">
@@ -106,39 +113,36 @@
         </div>
     </div>
 
-    <div id="page2">
+    <div id="page2" class="page">
         <div class="stack-container" style="z-index: 1;">
-            <div class="glass-frame"><div class="photo-card"><img src="image1.jpg.JPG"><div class="overlay-text">Every moment...</div></div></div>
+            <div class="perspective-wrapper">
+                <div class="glass-header"></div>
+                <div class="photo-card"><img src="img1.JPG"></div>
+                <div class="glass-footer"><div class="black-bold-text">Every moment...</div></div>
+            </div>
         </div>
         <div class="stack-container" style="z-index: 2;">
-            <div class="glass-frame"><div class="photo-card"><img src="image2.jpg.HEIC"><div class="overlay-text">With you...</div></div></div>
+            <div class="perspective-wrapper">
+                <div class="glass-header"></div>
+                <div class="photo-card"><img src="img2.jpg"></div>
+                <div class="glass-footer"><div class="black-bold-text">Is a new dream.</div></div>
+            </div>
         </div>
-        <div class="stack-container" style="z-index: 3;">
-            <div class="glass-frame"><div class="photo-card"><img src="image3.jpg.HEIC"><div class="overlay-text">Is magical.</div></div></div>
-        </div>
-        <div class="stack-container" style="z-index: 4;">
-            <div class="glass-frame"><div class="photo-card"><img src="image4.jpg.jpg"><div class="overlay-text">My peace.</div></div></div>
-        </div>
-        <div class="stack-container" style="z-index: 5;">
-            <div class="glass-frame"><div class="photo-card"><img src="image5.jpg.HEIC"><div class="overlay-text">Always.</div></div></div>
-        </div>
-        <div class="stack-container" style="z-index: 6;">
-            <div class="glass-frame">
-                <div class="photo-card">
-                    <img src="image6.jpg.HEIC">
-                    <div class="overlay-text">
-                        I love you!
-                        <button onclick="goToFinal()" style="display:block; margin: 15px auto 0; background:black; color:white; border:none; padding:10px 25px; border-radius:20px; font-weight:bold;">OPEN</button>
-                    </div>
+        <div class="stack-container" style="z-index: 10;">
+            <div class="perspective-wrapper">
+                <div class="glass-header"></div>
+                <div class="photo-card"><img src="img10.jpg"></div>
+                <div class="glass-footer">
+                    <button onclick="goToFinal()" style="background:black; color:white; border:none; padding:8px 20px; border-radius:15px; font-weight:bold;">OPEN HEART</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="page3">
+    <div id="page3" class="page">
         <div class="letter-box">
-            <h2 style="font-family: var(--royal-font); margin-bottom: 20px;">My Buji ma,</h2>
-            <p style="line-height: 1.8; font-size: 1.1rem;">[PASTE YOUR LETTER HERE]</p>
+            <h2>My Buji ma,</h2>
+            <p>[PASTE YOUR LETTER HERE]</p>
             <button class="btn-enter" onclick="location.reload()" style="margin-top: 20px;">RESET</button>
         </div>
     </div>
@@ -146,20 +150,30 @@
     <script>
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
-        const p3 = document.getElementById('page3');
-        const video = document.getElementById('bg-video');
+        const containers = document.querySelectorAll('.perspective-wrapper');
 
         function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 1200); }
-        function unmuteVideo() { video.muted = false; }
+        function unmuteVideo() { document.getElementById('bg-video').muted = false; }
 
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                video.pause(); video.src = ""; video.remove(); 
+                const v = document.getElementById('bg-video'); v.pause(); v.remove();
                 p1.style.display = 'none'; p2.style.display = 'block';
             }
         }
 
-        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
+        /* 🔄 Perspective Slide Logic */
+        p2.addEventListener('scroll', () => {
+            const scrollPercent = p2.scrollTop / (p2.scrollHeight - p2.clientHeight);
+            containers.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                // Move Right as you scroll up
+                const xOffset = Math.max(0, (window.innerHeight - rect.top) * 0.1); 
+                card.style.transform = `translateX(${xOffset}px) rotateY(-5deg)`;
+            });
+        });
+
+        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; window.scrollTo(0,0); }
     </script>
 </body>
 </html>
