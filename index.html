@@ -6,143 +6,154 @@
     <title>For My Buji ma 🎀</title>
     <style>
         :root {
-            --lavender: #E6E6FA;
-            --deep-purple: #4b0082;
-            --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --vibrant-violet: #8A2BE2;
+            --loading-purple: #4b0082;
+            --royal-font: "Didot", serif;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        /* iOS Elastic Scroll Feel */
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: var(--lavender); overflow: hidden;
-            font-family: -apple-system, sans-serif;
+            background-color: var(--vibrant-violet); 
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
         }
 
-        /* 🤌🏻 Loading Screen */
         #loading-screen {
-            position: fixed; inset: 0; background: #000; z-index: 1000;
+            position: fixed; inset: 0; background: var(--loading-purple); z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
+            color: white; font-family: var(--royal-font); font-style: italic;
         }
 
         /* 1️⃣ PAGE 1: FLOATING LOGIN */
         .page { display: none; width: 100%; height: 100vh; position: relative; z-index: 10; }
-        #page1 { 
-            display: flex; flex-direction: column; 
-            justify-content: flex-end; align-items: center; 
-            padding-bottom: 100px; background: #000;
-        }
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 12vh; background: #000; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
         
-        #bg-video {
-            width: 100%; height: 100%; object-fit: cover;
-            position: absolute; top: 0; left: 0; z-index: 1;
-        }
-
         .login-capsule { 
-            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center; 
-            background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border); border-radius: 40px; 
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-            animation: floatingBox 3s ease-in-out infinite;
+            position: relative; z-index: 2; width: 280px; padding: 30px; text-align: center; 
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 40px; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            animation: floatUI 4s ease-in-out infinite;
+            will-change: transform;
         }
 
-        @keyframes floatingBox {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .royal-title { color: white; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; }
+        @keyframes floatUI { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
 
         input[type="date"] {
-            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); 
-            border: none; border-bottom: 2px solid var(--lavender);
-            color: white; font-family: var(--royal-font); font-size: 1.1rem;
-            margin-bottom: 25px; outline: none; text-align: center;
-            border-radius: 4px 4px 0 0;
+            width: 100%; padding: 12px; background: transparent; border: none; 
+            border-bottom: 2px solid white; color: white; text-align: center;
+            font-size: 1.1rem; margin-bottom: 20px; outline: none;
         }
 
         .btn-enter { 
-            background: transparent; color: white; border: 1px solid var(--lavender); 
-            padding: 12px; font-family: var(--royal-font); text-transform: uppercase; 
-            letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px; 
+            background: white; color: black; border: none; padding: 14px; 
+            width: 100%; border-radius: 30px; font-weight: 700; letter-spacing: 1px;
         }
 
-        /* 2️⃣ PAGE 2: GALAXY TAB STACKING */
+        /* 2️⃣ PAGE 2: iPHONE MULTITASK STACK */
         #page2 { 
-            background-color: var(--lavender); 
-            overflow-y: auto; scroll-snap-type: y mandatory;
-            height: 100vh; scrollbar-width: none;
+            background-color: var(--vibrant-violet); 
+            overflow-y: scroll; 
+            scroll-snap-type: y mandatory;
+            height: 100vh;
+            -webkit-overflow-scrolling: touch; /* Butter smooth iOS physics */
+            scroll-behavior: smooth;
         }
         #page2::-webkit-scrollbar { display: none; }
 
-        .stack-section {
-            height: 100vh; width: 100%; display: flex; justify-content: center;
-            align-items: flex-end; scroll-snap-align: start; 
+        .stack-container {
+            height: 100vh; width: 100%; 
+            display: flex; justify-content: center; align-items: center;
+            scroll-snap-align: center; 
             position: sticky; top: 0;
+            will-change: transform;
         }
 
-        .cosmos-card {
-            width: 100%; height: 90vh; border-radius: 40px 40px 0 0; 
-            overflow: hidden; position: relative; background: white;
-            box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
+        .floating-template {
+            width: 88%; height: 78vh; border-radius: 45px; 
+            overflow: hidden; position: relative;
+            background: #000; box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+            transform: translateZ(0); /* Hardware Acceleration */
+            animation: cardBreathe 6s ease-in-out infinite;
         }
 
-        .cosmos-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        .card-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to bottom, 
-                transparent 0%, transparent 55%, 
-                rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.9) 100%); 
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 50px 30px;
+        @keyframes cardBreathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
 
-        .card-text { color: white; font-family: var(--royal-font); font-size: 1.8rem; margin-bottom: 10px; }
+        .floating-template img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 3️⃣ PAGE 3: FINAL LETTER */
-        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; }
-        .letter-box { 
-            background: white; padding: 40px; border-radius: 30px; 
-            max-width: 500px; width: 100%; color: var(--deep-purple); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        /* iOS Style Glass Bar */
+        .glass-text-bar {
+            position: absolute; bottom: 8%; left: 6%; right: 6%;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 22px; border-radius: 30px;
+            color: #000; font-weight: 900; 
+            font-size: 1.4rem; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        .nav-btn {
-            position: fixed; top: 20px; left: 20px; z-index: 200;
-            background: rgba(255, 255, 255, 0.4); border: none; 
-            padding: 7px 15px; border-radius: 20px; font-size: 0.65rem;
+        /* Swipe Hint */
+        .swipe-hint {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%); color: white;
+            font-size: 0.7rem; letter-spacing: 2px; opacity: 0.6;
+            animation: bounce 2s infinite; z-index: 100;
         }
+
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);} 40% {transform: translateY(-10px) translateX(-50%);} }
+
+        /* 3️⃣ PAGE 3: FINAL */
+        #page3 { background: var(--vibrant-violet); flex-direction: column; align-items: center; padding: 100px 20px; overflow-y: auto; }
+        .letter-box { background: rgba(255,255,255,0.95); padding: 45px; border-radius: 40px; width: 100%; max-width: 500px; color: #000; }
+
     </style>
 </head>
 <body onload="init()">
 
-    <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
+    <div id="loading-screen">🤌🏻 loading...</div>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="video.mp4.MP4" type="video/mp4"></video>
         <div class="login-capsule">
-            <div class="royal-title">For my Buji ma 🎀🤌🏻</div>
+            <div style="color:white; margin-bottom:15px; font-weight: 700;">For my Buji ma 🎀</div>
             <input type="date" id="birthInput">
-            <button class="btn-enter" onclick="checkLogin()">Enter</button>
-            <div id="error-msg" style="color:#ffb3b3; font-size: 0.75rem; margin-top:10px; display:none;">Correct ah podu👺</div>
+            <button class="btn-enter" onclick="checkLogin()">ENTER</button>
         </div>
     </div>
 
     <div id="page2" class="page">
-        <button class="nav-btn" onclick="location.reload()">RESET</button>
-        <div class="stack-section"><div class="cosmos-card"><img src="image1.jpg.JPG"><div class="card-overlay"><div class="card-text">Every moment...</div></div></div></div>
-        <div class="stack-section"><div class="cosmos-card"><img src="image2.jpg.HEIC"><div class="card-overlay"><div class="card-text">With you...</div></div></div></div>
-        <div class="stack-section"><div class="cosmos-card"><img src="image3.jpg.HEIC"><div class="card-overlay"><div class="card-text">Is magical.</div></div></div></div>
-        <div class="stack-section"><div class="cosmos-card"><img src="image4.jpg.jpg"><div class="card-overlay"><div class="card-text">My peace.</div></div></div></div>
-        <div class="stack-section"><div class="cosmos-card"><img src="image5.jpg.HEIC"><div class="card-overlay"><div class="card-text">Always.</div></div></div></div>
-        <div class="stack-section">
-            <div class="cosmos-card">
+        <div class="swipe-hint">SWIPE UP</div>
+        
+        <div class="stack-container">
+            <div class="floating-template"><img src="image1.jpg.JPG"><div class="glass-text-bar">Every moment...</div></div>
+        </div>
+        <div class="stack-container">
+            <div class="floating-template"><img src="image2.jpg.HEIC"><div class="glass-text-bar">With you...</div></div>
+        </div>
+        <div class="stack-container">
+            <div class="floating-template"><img src="image3.jpg.HEIC"><div class="glass-text-bar">Is magical.</div></div>
+        </div>
+        <div class="stack-container">
+            <div class="floating-template"><img src="image4.jpg.jpg"><div class="glass-text-bar">My peace.</div></div>
+        </div>
+        <div class="stack-container">
+            <div class="floating-template"><img src="image5.jpg.HEIC"><div class="glass-text-bar">Always.</div></div>
+        </div>
+        <div class="stack-container">
+            <div class="floating-template">
                 <img src="image6.jpg.HEIC">
-                <div class="card-overlay">
-                    <div class="card-text">I love you!</div>
-                    <button class="btn-enter" onclick="goToFinal()">Open Heart</button>
+                <div class="glass-text-bar">
+                    I love you!
+                    <button onclick="goToFinal()" style="display:block; margin: 15px auto 0; background:#000; color:#fff; border:none; padding:10px 25px; border-radius:20px; font-weight:700;">OPEN HEART</button>
                 </div>
             </div>
         </div>
@@ -150,39 +161,32 @@
 
     <div id="page3" class="page">
         <div class="letter-box">
-            <h2 style="font-family: var(--royal-font);">My Buji,</h2>
-            <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
-            <button class="btn-enter" style="color:var(--deep-purple); border-color:var(--deep-purple);" onclick="goBackToScroll()">Back</button>
+            <h2 style="font-family: var(--royal-font);">My Buji ma,</h2>
+            <p style="line-height: 1.8; font-size: 1.1rem;">[PASTE YOUR LETTER HERE]</p>
+            <button class="btn-enter" style="background:#000; color:#fff;" onclick="location.reload()">REPLAY</button>
         </div>
     </div>
 
     <script>
         const p1 = document.getElementById('page1');
         const p2 = document.getElementById('page2');
-        const p3 = document.getElementById('page3');
         const video = document.getElementById('bg-video');
 
-        function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 1000); }
+        function init() { setTimeout(() => document.getElementById('loading-screen').style.display='none', 1200); }
         function unmuteVideo() { video.muted = false; }
 
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                // ARREST AUDIO & REMOVE VIDEO PERMANENTLY
                 video.pause();
                 video.src = "";
-                video.load();
                 video.remove(); 
                 
                 p1.style.display = 'none'; 
                 p2.style.display = 'block';
-                document.body.style.overflow = 'auto';
-            } else {
-                document.getElementById('error-msg').style.display = 'block';
             }
         }
 
-        function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
-        function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
+        function goToFinal() { p2.style.display = 'none'; document.getElementById('page3').style.display = 'flex'; window.scrollTo(0,0); }
     </script>
 </body>
 </html>
