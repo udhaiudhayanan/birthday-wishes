@@ -9,6 +9,7 @@
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
             --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
+            --glass-border: rgba(255, 255, 255, 0.4);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -18,103 +19,130 @@
             font-family: -apple-system, sans-serif;
         }
 
-        /* 1️⃣ PAGE 1: LOGIN */
-        .page { display: none; width: 100%; height: 100vh; position: relative; z-index: 10; }
-        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; background: #000; }
-        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
-        
-        .login-capsule { 
-            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center; 
-            background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); 
-            border: 1px solid rgba(255,255,255,0.3); border-radius: 40px; 
+        /* 🤌🏻 Loading Screen */
+        #loading-screen {
+            position: fixed; inset: 0; background: #000; z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
         }
 
-        /* 2️⃣ PAGE 2: COSMOS STACKING (FULL WIDTH SIDES/BOTTOM) */
-        #page2 { background-color: var(--lavender); overflow-y: auto; scroll-snap-type: y mandatory; height: 100vh; }
+        /* 1️⃣ PAGE 1: FLOATING LOGIN */
+        .page { display: none; width: 100%; height: 100vh; position: relative; z-index: 10; }
+        #page1 { 
+            display: flex; flex-direction: column; 
+            justify-content: flex-end; align-items: center; 
+            padding-bottom: 100px; background: #000;
+        }
+        
+        #bg-video {
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0; z-index: 1;
+        }
+
+        .login-capsule { 
+            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center; 
+            background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 40px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: floatingBox 3s ease-in-out infinite;
+        }
+
+        @keyframes floatingBox {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .royal-title { color: white; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; }
+
+        input[type="date"] {
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.15); 
+            border: none; border-bottom: 2px solid var(--lavender);
+            color: white; font-family: var(--royal-font); font-size: 1.1rem;
+            margin-bottom: 25px; outline: none; text-align: center;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .btn-enter { 
+            background: transparent; color: white; border: 1px solid var(--lavender); 
+            padding: 12px; font-family: var(--royal-font); text-transform: uppercase; 
+            letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px; 
+        }
+
+        /* 2️⃣ PAGE 2: GALAXY TAB STACKING */
+        #page2 { 
+            background-color: var(--lavender); 
+            overflow-y: auto; scroll-snap-type: y mandatory;
+            height: 100vh; scrollbar-width: none;
+        }
+        #page2::-webkit-scrollbar { display: none; }
 
         .stack-section {
             height: 100vh; width: 100%; display: flex; justify-content: center;
-            align-items: flex-end; /* Card sits at the bottom */
-            scroll-snap-align: start; position: sticky; top: 0;
+            align-items: flex-end; scroll-snap-align: start; 
+            position: sticky; top: 0;
         }
 
         .cosmos-card {
-            width: 100%; /* Covers all sides */
-            height: 92vh; /* Leaves only the top open */
-            border-radius: 40px 40px 0 0; /* Rounded only at the top */
-            overflow: hidden; position: relative;
-            background: white;
-            box-shadow: 0 -15px 40px rgba(0,0,0,0.12);
+            width: 100%; height: 90vh; border-radius: 40px 40px 0 0; 
+            overflow: hidden; position: relative; background: white;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.3);
         }
 
         .cosmos-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* THE COSMOS FADE: Heavy gradient at the bottom */
         .card-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(to bottom, 
-                transparent 0%, 
-                transparent 50%, 
-                rgba(0,0,0,0.4) 75%, 
-                rgba(0,0,0,0.85) 100%); /* Deep fade as requested */
+                transparent 0%, transparent 55%, 
+                rgba(0,0,0,0.5) 80%, rgba(0,0,0,0.9) 100%); 
             display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 60px 30px;
+            padding: 50px 30px;
         }
 
-        .card-text {
-            color: white; font-family: var(--royal-font); font-size: 1.8rem;
-            margin-bottom: 20px; letter-spacing: 1px;
-        }
+        .card-text { color: white; font-family: var(--royal-font); font-size: 1.8rem; margin-bottom: 10px; }
 
-        /* 3️⃣ PAGE 3: FINAL */
+        /* 3️⃣ PAGE 3: FINAL LETTER */
         #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; }
-        .letter-box { background: white; padding: 40px; border-radius: 30px; max-width: 500px; width: 100%; color: var(--deep-purple); }
+        .letter-box { 
+            background: white; padding: 40px; border-radius: 30px; 
+            max-width: 500px; width: 100%; color: var(--deep-purple); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
 
         .nav-btn {
             position: fixed; top: 20px; left: 20px; z-index: 200;
-            background: rgba(255, 255, 255, 0.4); border: none; padding: 7px 15px; border-radius: 20px; font-size: 0.65rem;
+            background: rgba(255, 255, 255, 0.4); border: none; 
+            padding: 7px 15px; border-radius: 20px; font-size: 0.65rem;
         }
-
-        .btn-enter { background: transparent; color: white; border: 1px solid var(--lavender); padding: 12px; font-family: var(--royal-font); text-transform: uppercase; letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px; }
     </style>
 </head>
 <body onload="init()">
 
-    <div id="loading-screen" style="position:fixed; inset:0; background:#000; color:white; display:flex; justify-content:center; align-items:center; z-index:1000;">konjam wait panu d chlm🤌🏻</div>
+    <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
         <video id="bg-video" autoplay loop playsinline muted><source src="video.mp4.MP4" type="video/mp4"></video>
         <div class="login-capsule">
-            <div style="color:white; font-family:var(--royal-font); margin-bottom:20px;">For my Buji ma 🎀🤌🏻</div>
+            <div class="royal-title">For my Buji ma 🎀🤌🏻</div>
             <input type="date" id="birthInput">
             <button class="btn-enter" onclick="checkLogin()">Enter</button>
+            <div id="error-msg" style="color:#ffb3b3; font-size: 0.75rem; margin-top:10px; display:none;">Correct ah podu👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
         <button class="nav-btn" onclick="location.reload()">RESET</button>
-        
-        <div class="stack-section">
-            <div class="cosmos-card"><img src="image1.jpg.JPG"><div class="card-overlay"><div class="card-text">Every moment...</div></div></div>
-        </div>
-        <div class="stack-section">
-            <div class="cosmos-card"><img src="image2.jpg.HEIC"><div class="card-overlay"><div class="card-text">Is a dream.</div></div></div>
-        </div>
-        <div class="stack-section">
-            <div class="cosmos-card"><img src="image3.jpg.HEIC"><div class="card-overlay"><div class="card-text">Light of my life.</div></div></div>
-        </div>
-        <div class="stack-section">
-            <div class="cosmos-card"><img src="image4.jpg.jpg"><div class="card-overlay"><div class="card-text">Better with you.</div></div></div>
-        </div>
-        <div class="stack-section">
-            <div class="cosmos-card"><img src="image5.jpg.HEIC"><div class="card-overlay"><div class="card-text">Forever.</div></div></div>
-        </div>
+        <div class="stack-section"><div class="cosmos-card"><img src="image1.jpg.JPG"><div class="card-overlay"><div class="card-text">Every moment...</div></div></div></div>
+        <div class="stack-section"><div class="cosmos-card"><img src="image2.jpg.HEIC"><div class="card-overlay"><div class="card-text">With you...</div></div></div></div>
+        <div class="stack-section"><div class="cosmos-card"><img src="image3.jpg.HEIC"><div class="card-overlay"><div class="card-text">Is magical.</div></div></div></div>
+        <div class="stack-section"><div class="cosmos-card"><img src="image4.jpg.jpg"><div class="card-overlay"><div class="card-text">My peace.</div></div></div></div>
+        <div class="stack-section"><div class="cosmos-card"><img src="image5.jpg.HEIC"><div class="card-overlay"><div class="card-text">Always.</div></div></div></div>
         <div class="stack-section">
             <div class="cosmos-card">
                 <img src="image6.jpg.HEIC">
                 <div class="card-overlay">
                     <div class="card-text">I love you!</div>
-                    <button class="btn-enter" onclick="goToFinal()">Open Letter</button>
+                    <button class="btn-enter" onclick="goToFinal()">Open Heart</button>
                 </div>
             </div>
         </div>
@@ -123,7 +151,7 @@
     <div id="page3" class="page">
         <div class="letter-box">
             <h2 style="font-family: var(--royal-font);">My Buji,</h2>
-            <p>[YOUR LETTER]</p>
+            <p style="line-height: 1.8;">[PASTE YOUR LETTER HERE]</p>
             <button class="btn-enter" style="color:var(--deep-purple); border-color:var(--deep-purple);" onclick="goBackToScroll()">Back</button>
         </div>
     </div>
@@ -139,7 +167,7 @@
 
         function checkLogin() {
             if (document.getElementById('birthInput').value === "2004-02-23") { 
-                // ARREST AUDIO: Stop and remove the video completely
+                // ARREST AUDIO & REMOVE VIDEO PERMANENTLY
                 video.pause();
                 video.src = "";
                 video.load();
@@ -148,6 +176,8 @@
                 p1.style.display = 'none'; 
                 p2.style.display = 'block';
                 document.body.style.overflow = 'auto';
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
             }
         }
 
