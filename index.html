@@ -5,104 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For You 💜</title>
     <style>
+        /* ROYAL DESIGN SYSTEM */
         :root {
             --lavender: #E6E6FA;
             --deep-purple: #4b0082;
-            --glass: rgba(255, 255, 255, 0.15);
+            --royal-font: "Didot", "Bodoni MT", "Cochin", "Baskerville", serif;
+            --glass-border: rgba(255, 255, 255, 0.2);
         }
 
         * { box-sizing: border-box; }
         body, html { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #000; overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         /* 🤌🏻 Loading Screen */
         #loading-screen {
-            position: fixed; inset: 0; background: #000; z-index: 100;
+            position: fixed; inset: 0; background: #000; z-index: 1000;
             display: flex; justify-content: center; align-items: center;
-            color: var(--lavender); font-size: 1.1rem;
+            color: var(--lavender); font-family: var(--royal-font); font-style: italic;
         }
 
-        /* Navigation Buttons */
+        /* Navigation */
         .back-btn {
-            position: absolute; top: 20px; left: 20px; z-index: 50;
-            background: var(--glass); backdrop-filter: blur(10px);
-            color: white; border: 1px solid rgba(255,255,255,0.2);
-            padding: 10px 18px; border-radius: 20px; font-size: 0.8rem;
-            cursor: pointer;
+            position: absolute; top: 25px; left: 20px; z-index: 100;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            color: white; border: 1px solid var(--glass-border);
+            padding: 8px 15px; border-radius: 2px; font-family: var(--royal-font);
+            font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        /* 1️⃣ Page 1: Login */
+        /* 1️⃣ Page 1: Royal Landing (Content at Bottom) */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
-        #page1 { display: flex; justify-content: center; align-items: center; }
+        #page1 { 
+            display: flex; flex-direction: column; 
+            justify-content: flex-end; align-items: center; 
+            padding-bottom: 80px; 
+        }
         
         #bg-video {
-            width: 540px; height: 960px; 
-            object-fit: cover; position: absolute; z-index: 1;
+            width: 100%; height: 100%; object-fit: cover;
+            position: absolute; top: 0; left: 0; z-index: 1;
         }
 
         .login-container {
-            position: relative; z-index: 2; width: 320px;
-            padding: 30px; text-align: center;
+            position: relative; z-index: 2; width: 85%; max-width: 380px;
+            padding: 25px; text-align: center;
+            background: rgba(0, 0, 0, 0.15); /* Ultra-transparent */
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .royal-title {
+            color: white; font-family: var(--royal-font); font-style: italic;
+            font-size: 1.6rem; margin-bottom: 20px; letter-spacing: 5px; opacity: 0.8;
         }
 
         input[type="date"] {
-            width: 100%; padding: 15px; border-radius: 12px;
-            background: var(--glass); backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white; font-size: 1rem; margin-bottom: 15px;
-            outline: none; appearance: none; -webkit-appearance: none;
+            width: 100%; padding: 12px; background: transparent;
+            border: none; border-bottom: 1px solid var(--glass-border);
+            color: white; font-family: var(--royal-font); font-size: 1.1rem;
+            margin-bottom: 25px; outline: none; text-align: center;
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; }
 
-        .btn-lavender {
-            background: var(--lavender); color: var(--deep-purple);
-            border: none; padding: 16px; border-radius: 30px;
-            font-weight: bold; width: 100%; cursor: pointer; font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .btn-enter {
+            background: transparent; color: white; border: 1px solid var(--lavender);
+            padding: 15px; font-family: var(--royal-font); text-transform: uppercase;
+            letter-spacing: 6px; width: 100%; cursor: pointer; transition: 0.4s;
         }
+        .btn-enter:active { background: var(--lavender); color: var(--deep-purple); }
 
         #error-msg { 
-            color: #000; font-weight: 900; margin-top: 15px; 
-            font-size: 0.9rem; display: none;
-            background: rgba(255,255,255,0.7); padding: 8px; border-radius: 8px;
+            color: white; font-family: var(--royal-font); font-size: 0.8rem; font-style: italic;
+            margin-top: 15px; display: none; letter-spacing: 1px;
         }
 
-        /* 2️⃣ Page 2: Cosmos Interactive Scroll */
-        #page2 { 
-            background: var(--lavender); overflow-y: scroll; 
-            scroll-snap-type: y mandatory; height: 100vh;
-        }
-
+        /* 2️⃣ Page 2: Cosmos Scroll */
+        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; }
         .scroll-section {
             height: 100vh; width: 100%; scroll-snap-align: start;
             display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; position: relative;
-            background-size: cover; background-position: center;
+            align-items: center; background-size: cover; background-position: center;
         }
-
         .scroll-text {
-            font-size: 3.2rem; font-weight: 800; color: white;
-            text-align: center; padding: 20px;
-            text-shadow: 0 4px 25px rgba(0,0,0,0.7);
-            letter-spacing: -1.5px; line-height: 1;
+            font-size: 3rem; font-weight: 800; color: white; text-align: center;
+            padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6); letter-spacing: -1px;
         }
 
-        /* 3️⃣ Page 3: Final Paragraph */
-        #page3 { 
-            background: var(--lavender); flex-direction: column; 
-            align-items: center; padding: 80px 20px; overflow-y: auto;
-        }
-
+        /* 3️⃣ Page 3: Final Letter */
+        #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 100px 25px; overflow-y: auto; }
         .letter-box {
-            background: white; padding: 40px; border-radius: 30px;
-            max-width: 600px; width: 100%; color: var(--deep-purple);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            position: relative;
+            background: white; padding: 45px 35px; border-radius: 2px;
+            max-width: 550px; width: 100%; color: var(--deep-purple);
+            box-shadow: 0 10px 50px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -115,94 +113,82 @@
             <source src="video.mp4.MP4" type="video/mp4">
         </video>
         <div class="login-container">
+            <div class="royal-title">The Invitation</div>
             <input type="date" id="birthInput" onfocus="unmuteVideo()">
-            <button class="btn-lavender" onclick="checkLogin()">Vaa Polaam</button>
+            <button class="btn-enter" onclick="checkLogin()">Enter</button>
             <div id="error-msg">Birthdate ah correct podu eruma maadu👺</div>
         </div>
     </div>
 
     <div id="page2" class="page">
-        <button class="back-btn" onclick="goBackToLogin()">← Back</button>
-        
-        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('image1.jpg.JPG');">
-            <div class="scroll-text">Thinking of you.</div>
-        </section>
-        
-        <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');">
-            <div class="scroll-text">Every single</div>
-        </section>
-        
-        <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');">
-            <div class="scroll-text">moment.</div>
-        </section>
-        
-        <section class="scroll-section" style="background-image: url('image4.jpg.jpg');">
-            <div class="scroll-text">You are</div>
-        </section>
-        
-        <section class="scroll-section" style="background-image: url('image5.jpg.HEIC');">
-            <div class="scroll-text">my peace.</div>
-        </section>
-        
+        <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
+        <section class="scroll-section" style="background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url('image1.jpg.JPG');"><div class="scroll-text">Thinking of you.</div></section>
+        <section class="scroll-section" style="background-image: url('image2.jpg.HEIC');"><div class="scroll-text">Every single</div></section>
+        <section class="scroll-section" style="background-image: url('image3.jpg.HEIC');"><div class="scroll-text">moment.</div></section>
+        <section class="scroll-section" style="background-image: url('image4.jpg.jpg');"><div class="scroll-text">You are</div></section>
+        <section class="scroll-section" style="background-image: url('image5.jpg.HEIC');"><div class="scroll-text">my peace.</div></section>
         <section class="scroll-section" style="background-image: url('image6.jpg.HEIC');">
-            <div class="scroll-text">Ready?</div>
-            <button class="btn-lavender" style="width: auto; padding: 15px 40px; margin-top: 30px;" onclick="goToFinal()">Hold my Hand</button>
+            <div class="scroll-text">Always.</div>
+            <button class="btn-enter" style="width: auto; padding: 12px 30px; margin-top: 25px;" onclick="goToFinal()">Hold my Hand</button>
         </section>
     </div>
 
     <div id="page3" class="page">
-        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--lavender);" onclick="goBackToScroll()">← Back to Photos</button>
+        <button class="back-btn" style="color: var(--deep-purple); border-color: var(--deep-purple);" onclick="goBackToScroll()">← PHOTOS</button>
         <div class="letter-box">
-            <h2 style="margin-top:0; font-weight: 800;">For My Human 💜</h2>
-            <p style="line-height:1.8; font-size:1.1rem; color: #333;">
-                Paste your full heartfelt letter right here. Tell them everything about how much they mean to you. This is your dedicated space to be as long as you want!
+            <h2 style="font-family: var(--royal-font); font-style: italic; font-weight: 200; font-size: 2rem;">Dear You,</h2>
+            <p style="line-height: 2; font-size: 1.05rem; color: #444;">
+                [PASTE YOUR FULL LETTER HERE]
+                <br><br>
+                Happy Birthday. This is just a small piece of the universe I wanted to build for you.
             </p>
-            <p style="text-align: right; font-weight: bold; margin-top: 30px;">- Always yours</p>
         </div>
     </div>
 
     <script>
         const video = document.getElementById('bg-video');
+        const p1 = document.getElementById('page1');
+        const p2 = document.getElementById('page2');
+        const p3 = document.getElementById('page3');
 
         function init() {
             setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000);
         }
 
-        // Unmutes audio when user interacts
-        function unmuteVideo() { 
-            video.muted = false; 
-        }
+        function unmuteVideo() { video.muted = false; }
 
         function checkLogin() {
-            const dateVal = document.getElementById('birthInput').value;
-            const secretDate = "2004-02-23"; // 🚨 EDIT THIS (YYYY-MM-DD)
-            
-            if (dateVal === secretDate) {
-                video.pause(); // Stops video audio when moving to next page
-                document.getElementById('page1').style.display = 'none';
-                document.getElementById('page2').style.display = 'block';
+            const val = document.getElementById('birthInput').value;
+            const secret = "2004-02-23"; // 🚨 EDIT THIS DATE (YYYY-MM-DD)
+            if (val === secret) {
+                video.pause();
+                p1.style.display = 'none';
+                p2.style.display = 'block';
+                p2.scrollTop = 0;
                 document.body.style.overflow = 'auto';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
             }
         }
 
-        function goToFinal() {
-            document.getElementById('page2').style.display = 'none';
-            document.getElementById('page3').style.display = 'flex';
-            window.scrollTo(0,0);
-        }
-
         function goBackToLogin() {
-            document.getElementById('page2').style.display = 'none';
-            document.getElementById('page1').style.display = 'flex';
+            p2.style.display = 'none';
+            p1.style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            video.currentTime = 0;
             video.play();
         }
 
+        function goToFinal() {
+            p2.style.display = 'none';
+            p3.style.display = 'flex';
+            window.scrollTo(0,0);
+        }
+
         function goBackToScroll() {
-            document.getElementById('page3').style.display = 'none';
-            document.getElementById('page2').style.display = 'block';
+            p3.style.display = 'none';
+            p2.style.display = 'block';
+            p2.scrollTop = p2.scrollHeight;
         }
     </script>
 </body>
