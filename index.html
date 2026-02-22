@@ -33,77 +33,56 @@
             font-size: 0.7rem; letter-spacing: 2px; cursor: pointer;
         }
 
-        /* PAGE 1: FLOATING CAPSULE LAYOUT */
+        /* PAGE 1: FLOATING CAPSULE */
         .page { display: none; width: 100%; height: 100vh; position: relative; }
-        #page1 { 
-            display: flex; flex-direction: column; 
-            justify-content: flex-end; align-items: center; 
-            padding-bottom: 100px; 
-        }
-        
-        #bg-video {
-            width: 100%; height: 100%; object-fit: cover;
-            position: absolute; top: 0; left: 0; z-index: 1;
-        }
-
-        /* The Floating Box Refined */
+        #page1 { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding-bottom: 100px; }
+        #bg-video { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1; }
         .login-container {
-            position: relative; z-index: 2; 
-            width: 280px; 
-            padding: 30px 20px; text-align: center;
-            background: rgba(0, 0, 0, 0.25); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px; 
-            animation: float 3s ease-in-out infinite; 
+            position: relative; z-index: 2; width: 280px; padding: 30px 20px; text-align: center;
+            background: rgba(0, 0, 0, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); border-radius: 40px; animation: float 3s ease-in-out infinite; 
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .royal-title {
-            color: white; font-family: var(--royal-font); font-size: 1.4rem; 
-            margin-bottom: 20px; letter-spacing: 2px; opacity: 0.9;
-            line-height: 1.4;
-        }
-
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .royal-title { color: white; font-family: var(--royal-font); font-size: 1.4rem; margin-bottom: 20px; letter-spacing: 2px; opacity: 0.9; }
         input[type="date"] {
-            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); 
-            border: none; border-bottom: 1px solid var(--lavender);
-            color: white; font-family: var(--royal-font); font-size: 1rem;
-            margin-bottom: 20px; outline: none; text-align: center;
-            border-radius: 15px 15px 0 0;
+            width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); border: none; border-bottom: 1px solid var(--lavender);
+            color: white; font-family: var(--royal-font); font-size: 1rem; margin-bottom: 20px; outline: none; text-align: center; border-radius: 15px 15px 0 0;
+        }
+        .btn-enter { background: transparent; color: white; border: 1px solid var(--lavender); padding: 12px; font-family: var(--royal-font); text-transform: uppercase; letter-spacing: 4px; width: 100%; cursor: pointer; border-radius: 30px; font-size: 0.9rem; }
+        #error-msg { color: #ffb3b3; font-family: var(--royal-font); font-size: 0.75rem; font-style: italic; margin-top: 15px; display: none; }
+
+        /* 🌌 PAGE 2: COSMOS STYLE GRID */
+        #page2 { 
+            background: #000; /* Cosmos looks best on black */
+            overflow-y: scroll;
+            -webkit-overflow-scrolling: touch;
+        }
+        .cosmos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns like mobile Cosmos */
+            gap: 15px;
+            padding: 100px 15px 200px 15px; /* Top padding for scroll start */
+        }
+        .cosmos-item {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: opacity 0.6s ease, transform 0.1s linear;
+            opacity: 0; /* Starts hidden, revealed by JS */
+        }
+        .cosmos-item img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+        .cosmos-text {
+            position: absolute; bottom: 10px; left: 10px;
+            color: white; font-size: 0.7rem; font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.8; }
-
-        .btn-enter {
-            background: transparent; color: white; border: 1px solid var(--lavender);
-            padding: 12px; font-family: var(--royal-font); text-transform: uppercase;
-            letter-spacing: 4px; width: 100%; cursor: pointer; transition: 0.4s;
-            border-radius: 30px; 
-            font-size: 0.9rem;
-        }
-        .btn-enter:active { background: var(--lavender); color: var(--deep-purple); }
-
-        #error-msg { 
-            color: #ffb3b3; font-family: var(--royal-font); font-size: 0.75rem; font-style: italic;
-            margin-top: 15px; display: none;
-        }
-
-        /* PAGE 2 & 3 */
-        #page2 { background: var(--lavender); overflow-y: scroll; scroll-snap-type: y mandatory; }
-        .scroll-section {
-            height: 100vh; width: 100%; scroll-snap-align: start;
-            display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; background-size: cover; background-position: center;
-        }
-        .scroll-text {
-            font-size: 2.5rem; font-weight: 800; color: white; text-align: center;
-            padding: 20px; text-shadow: 0 4px 30px rgba(0,0,0,0.6);
-        }
+        /* PAGE 3: LETTER */
         #page3 { background: var(--lavender); flex-direction: column; align-items: center; padding: 80px 25px; overflow-y: auto; }
         .letter-box { background: white; padding: 40px; border-radius: 20px; max-width: 500px; width: 100%; color: var(--deep-purple); }
     </style>
@@ -113,9 +92,7 @@
     <div id="loading-screen">konjam wait panu d chlm🤌🏻</div>
 
     <div id="page1" class="page" style="display: flex;" onclick="unmuteVideo()">
-        <video id="bg-video" autoplay loop playsinline muted>
-            <source src="intro.MP4" type="video/mp4">
-        </video>
+        <video id="bg-video" autoplay loop playsinline muted><source src="intro.MP4" type="video/mp4"></video>
         <div class="login-container">
             <div class="royal-title">For my Buji ma 🎀<br>🤌🏻</div>
             <input type="date" id="birthInput" onfocus="unmuteVideo()">
@@ -126,19 +103,22 @@
 
     <div id="page2" class="page">
         <button class="back-btn" onclick="goBackToLogin()">← RESET</button>
-        <section class="scroll-section" style="background-image: url('img1.JPG');"><div class="scroll-text">Thinking of you.</div></section>
-        <section class="scroll-section" style="background-image: url('img2.jpg');"><div class="scroll-text">Every single</div></section>
-        <section class="scroll-section" style="background-image: url('img3.jpg');"><div class="scroll-text">moment.</div></section>
-        <section class="scroll-section" style="background-image: url('img4.jpg');"><div class="scroll-text">You are</div></section>
-        <section class="scroll-section" style="background-image: url('img5.jpg');"><div class="scroll-text">my peace.</div></section>
-        <section class="scroll-section" style="background-image: url('img6.jpg');"><div class="scroll-text">Always.</div></section>
-        <section class="scroll-section" style="background-image: url('img7.jpg');"><div class="scroll-text">In my heart.</div></section>
-        <section class="scroll-section" style="background-image: url('img8.jpg');"><div class="scroll-text">My world.</div></section>
-        <section class="scroll-section" style="background-image: url('img9.jpg');"><div class="scroll-text">My everything.</div></section>
-        <section class="scroll-section" style="background-image: url('img10.jpg');">
-            <div class="scroll-text">I Love You.</div>
-            <button class="btn-enter" style="width: auto; padding: 12px 30px; margin-top: 25px;" onclick="goToFinal()">Hold my Hand</button>
-        </section>
+        
+        <div class="cosmos-grid">
+            <div class="cosmos-item" data-speed="1.2"><img src="img1.JPG"><div class="cosmos-text">Thinking of you.</div></div>
+            <div class="cosmos-item" data-speed="0.8" style="margin-top: 40px;"><img src="img2.jpg"><div class="cosmos-text">Every single</div></div>
+            <div class="cosmos-item" data-speed="1.5"><img src="img3.jpg"><div class="cosmos-text">moment.</div></div>
+            <div class="cosmos-item" data-speed="1.0"><img src="img4.jpg"><div class="cosmos-text">You are</div></div>
+            <div class="cosmos-item" data-speed="1.3" style="margin-top: -20px;"><img src="img5.jpg"><div class="cosmos-text">my peace.</div></div>
+            <div class="cosmos-item" data-speed="0.9"><img src="img6.jpg"><div class="cosmos-text">Always.</div></div>
+            <div class="cosmos-item" data-speed="1.1"><img src="img7.jpg"><div class="cosmos-text">In my heart.</div></div>
+            <div class="cosmos-item" data-speed="1.4"><img src="img8.jpg"><div class="cosmos-text">My world.</div></div>
+            <div class="cosmos-item" data-speed="0.7"><img src="img9.jpg"><div class="cosmos-text">My everything.</div></div>
+            <div class="cosmos-item" data-speed="1.2">
+                <img src="img10.jpg">
+                <button class="btn-enter" style="margin-top:10px; padding: 5px; font-size: 0.6rem;" onclick="goToFinal()">OPEN LETTER</button>
+            </div>
+        </div>
     </div>
 
     <div id="page3" class="page">
@@ -157,6 +137,7 @@
 
         function init() { setTimeout(() => { document.getElementById('loading-screen').style.display = 'none'; }, 2000); }
         function unmuteVideo() { video.muted = false; }
+        
         function checkLogin() {
             const val = document.getElementById('birthInput').value;
             if (val === "2004-02-23") { 
@@ -168,6 +149,27 @@
         function goBackToLogin() { p2.style.display = 'none'; p1.style.display = 'flex'; video.play(); }
         function goToFinal() { p2.style.display = 'none'; p3.style.display = 'flex'; window.scrollTo(0,0); }
         function goBackToScroll() { p3.style.display = 'none'; p2.style.display = 'block'; }
+
+        /* 🌌 Cosmos Scroll Engine */
+        p2.addEventListener('scroll', () => {
+            const items = document.querySelectorAll('.cosmos-item');
+            const scrollY = p2.scrollTop;
+            const windowH = window.innerHeight;
+
+            items.forEach(item => {
+                const rect = item.getBoundingClientRect();
+                const speed = parseFloat(item.getAttribute('data-speed'));
+                
+                // 1. Calculate Opacity based on screen position (Cosmos fade)
+                const centerOffset = Math.abs((rect.top + rect.height/2) - windowH/2);
+                const opacity = 1 - (centerOffset / (windowH * 0.6));
+                item.style.opacity = Math.max(0, opacity);
+
+                // 2. Parallax Effect
+                const shift = (rect.top * (speed - 1));
+                item.querySelector('img').style.transform = `translateY(${shift}px)`;
+            });
+        });
     </script>
 </body>
 </html>
